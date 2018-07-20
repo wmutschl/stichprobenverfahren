@@ -1,0 +1,301 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = de_DE\documentclass[9pt]{beamer}
+\documentclass[9pt]{beamer}
+\usetheme{metropolis}
+\usepackage{iftex}
+
+\ifPDFTeX
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amsfonts,amssymb}
+\fi
+
+\ifXeTeX
+\fi
+
+\ifLuaTeX
+
+\fi
+
+\usepackage[ngerman]{babel}
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+%\setsansfont[BoldFont={Fira Sans SemiBold}]{Fira Sans Book}
+%\setsansfont{libertine}
+%\setmonofont{Helvetica Mono}
+
+\usepackage{appendixnumberbeamer}
+    % Backup slides
+    % call \appendix before your backup slides, metropolis will automatically turn off slide numbering and progress bars for slides in the appendix.
+
+\usepackage{booktabs}
+    % Better tables
+    % \toprule wird zu Beginn der Tabelle gesetzt
+    % \midrule werden innerhalb der Tabelle als horizontale Trennstriche verwendet
+    % \cmidrule{1-2} werden innerhalb der Tabelle als horizontale Trennstriche zwischen Spalten 1-2 verwendet
+    % \bottomrule setzt den Schlussstrich unter die Tabelle.
+    % F\"{u}r top- und bottomrule wird standardm\"{a}{\ss}ig eine dicke Linie verwendet, f\"{u}r midrule und cmidrule eine d\"{u}nne.
+    % Ein zus\"{a}tzlicher Abstand zwischen den Zeilen wird durch den Befehl \addlinespace erreicht.
+
+
+%% Set title etc.
+\title{Stichprobenverfahren}
+\subtitle{Einf\"{u}hrung}
+\date[SS2017]{Sommersemester 2017}
+\author{Willi Mutschler\\willi@mutschler.eu}
+
+
+\begin{document}
+\maketitle
+
+
+\begin{frame}\frametitle{Motivation}
+	\begin{itemize}
+		\item 2017 ist Wahljahr (Bundestag und Landtag)
+		\item Obwohl um 18 Uhr keine einzige Stimme ausgez\"{a}hlt ist, gibt es erste Prognosen, die erstaunlich genau sind
+		\item Prognosen basieren \"{u}blicherweise auf Befragung von W\"{a}hlern unmittelbar nach Abgabe ihrer Stimme (\emph{Exit Polls})
+	\begin{itemize}	
+    \item Wie schaffen wir es durch eine Befragung von 2000 Personen Aussagen \"{u}ber eine Bev\"{o}lkerung von 80 Millionen Personen zu machen?
+    \end{itemize}
+		\item Ziel der Veranstaltung ist es, Regeln zu finden f\"{u}r
+		\begin{enumerate}
+			\item Strategie der Ziehung
+			\item Auswertung der Antworten
+		\end{enumerate}
+		\item Anwendungen:
+        \begin{itemize}
+        \item Marktforschung, sozial- und wirtschaftswissenschaftliche Erhebungen, medizinische Studien, Umweltforschung, ...
+        \end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Gliederung}
+	\begin{enumerate}
+		\item Erhebungsverfahren
+		\item Inklusionsindikator und Inklusionswahrscheinlichkeiten
+        \item Sch\"{a}tzfunktionen
+        \item Einfache Zufallsstichproben
+        \item Konfidenzintervalle
+        \item Schichtenverfahren
+        \item Klumpenverfahren
+        \item Gebundene Hochrechnung
+        \item Stichprobenregression
+        \item Modellbasierte Stichprobenverfahren
+        \item Capture-Recapture Auswahl, Ranked Set Sampling, Adaptive Sampling
+        \item ...
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Zufallsgeneratoren (1)}
+\begin{itemize}
+\item Voraussetzung:
+    \begin{itemize}
+    \item Grundlegende Kenntnisse der Wahrscheinlichkeitsrechnung und der Mathematischen Statistik
+    \end{itemize}
+\item Die Wahrscheinlichkeitsrechnung ist aus der Besch\"{a}ftigung von Mathematikern mit Gl\"{u}cksspielen in der zweiten H\"{a}lfte des 17. Jahrhunderts entstanden
+\item F\"{u}r uns wichtig: Gl\"{u}cksspiele stellen spezifische Verwendungen von Zufallsgeneratoren dar
+\item Typische Beispiele: Werfen von M\"{u}nzen und Ziehen von Kugeln aus Urnen
+\item Zufallsgeneratoren spielen somit in der Wahrscheinlichkeitsrechnung eine zentrale Rolle
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Zufallsgeneratoren (2)}
+Charakterisierung von Zufallsgeneratoren
+\begin{enumerate}
+  \item Ein Zufallsgenerator ist ein Verfahren, mit dem durch Aktivierung des Zufallsgenerators Sachverhalte erzeugt werden k\"{o}nnen
+  \item Die Beschreibung eines Zufallsgenerators besteht in der Beschreibung des Verfahrens zur Erzeugung von Sachverhalten (z.B. Urne mit Kugeln f\"{u}llen, die sich nur durch die Beschriftung unterscheiden, mischen, blind ziehen, ...)
+  \item Zufallsgeneratoren k\"{o}nnen wiederholt (beliebig oft) angewendet werden
+  \item Mit dem Zufallsgenerator k\"{o}nnen \emph{Sachverhalte unterschiedlichen Typs} (z.B. die Zahlen 1 bis 6 beim W\"{u}rfeln) entstehen. Welcher Typ resultiert ist vor der Aktivierung unbestimmt.
+  \item Welcher Sachverhalt resultiert soll unabh\"{a}ngig von der vorherigen Verwendung des Zufallsgenerators sein (kein Ged\"{a}chtnis)
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Zufallsgeneratoren (3)}
+\begin{itemize}
+  \item Unsere \emph{Definition von Wahrscheinlichkeit} als
+$$ \frac{\text{Zahl der g\"{u}nstigen Ereignisse}}{\text{Zahl der gleichm\"{o}glichen Ereignisse}}$$
+beruht auf der Vorstellung eines elementaren Zufallsgenerators
+\item \emph{Idealer W\"{u}rfel}, Urne mit Kugeln, die sich nur durch die Farbe, die Beschriftung unterscheiden
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Datengenerierende Prozesse (1)}
+\begin{itemize}
+\item Urspr\"{u}nglich beziehen sich die Begriffsbildungen der Wahrscheinlichkeitsrechnung somit auf Zufallsgeneratoren
+\item In den Wirtschafts- und Sozialwissenschaften ist es allerdings \"{u}blich, die Begriffsbildungen der Wahrscheinlichkeitsrechnung auf soziale Prozesse anzuwenden
+\item D.h. es wird der spekulative Versuch unternommen, soziale Prozesse, durch die Sachverhalte unserer Erfahrungswelt entstehen, so zu deuten, als handle es sich um Realisierungen von Zufallsgeneratoren
+\item Beispiel: Renditen von Wertpapieren werden als Realisation eines Zufallsgenerators betrachtet, der normalverteilte, t-verteilte, Laplace verteilte,..., Zufallszahlen erzeugen kann
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Datengenerierende Prozesse (2)}
+\begin{itemize}
+  \item Die stochastische Regressionsanalyse stellt ein wichtiges Instrument im Rahmen der \emph{spekulativen Deutung sozialer Prozesse als Realisierungen von Zufallsgeneratoren} dar
+\item Ein Beispiel: die Einkommensfunktion
+$$ Arbeitslohn_i = \beta_0 + \beta_1 \cdot Ausbildungsjahre_i + u_i$$
+\item \"{U}berlegungen k\"{o}nnten dazu gef\"{u}hrt haben, dass wir annehmen, es bestehe ein linearer Zusammenhang zwischen dem Arbeitslohn einer Person $i$ und der Zahl der Ausbildungsjahre dieser Person $i$
+\item der durch eine Realisation $u_i$ einer Zufallsvariable $U_i$ additiv \"{u}berlagert ist
+\item In diesem Beispiel wird also der Sachverhalt eines bestimmten Arbeitslohns einer Person $i$ mit einer bestimmten Zahl an Ausbildungsjahren so interpretiert, als sei er durch einen Zufallsgenerator erzeugt worden
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Datengenerierende Prozesse (3)}
+\begin{itemize}
+\item M\"{o}glicherweise ist das Einkommen der Person $i$ aber deshalb doppelt so hoch wie der durchschnittliche Lohn von Personen mit dieser Zahl an Ausbildungsjahren, weil $i$ in dem Unternehmen seines Vaters angestellt ist
+\item Unter \"{O}konomen, Soziologen und Statistikern ist es \"{u}blich, derartige ausgedachte Zufallsgeneratoren als \emph{datengenerierende Prozesse} zu bezeichnen
+\item Im Rahmen der Besch\"{a}ftigung mit der Regressionsanalyse werden also Methoden betrachtet, mit denen man aus vorliegenden Daten einer bestimmten Anzahl von Personen Informationen \"{u}ber ausgedachte \emph{datengenerierende Prozesse} gewinnen kann
+\item Solche ausgedachten \emph{datengenerierenden Prozesse} werden auch als \emph{Superpopulationsmodelle} bezeichnet
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{Gesamtheiten und Stichproben (1)}
+\begin{itemize}
+\item Ein wichtiges Anwendungsfeld der Wahrscheinlichkeitsrechnung stellt die Stichprobentheorie dar
+\item Ausgangspunkt ist eine endliche Menge $U$ von Einheiten
+\item An diesen Einheiten k\"{o}nnten die Auspr\"{a}gungen des Merkmals $Y$ gemessen werden
+\item H\"{a}tten wir f\"{u}r alle Einheiten von $U$ das Merkmal $Y$ gemessen, k\"{o}nnten wir mit den Methoden der deskriptiven Statistik den Informationsgehalt \"{u}bersichtlich darstellen
+\item In der Stichprobentheorie besch\"{a}ftigen wir uns mit dem Problem, dass uns die Auspr\"{a}gungen des Merkmals $Y$ nicht f\"{u}r alle Einheiten der Grundgesamtheit $U$; sondern f\"{u}r eine Teilmenge $S$ vorliegen
+\item Die Teilmenge $S$ mit $S \subset U$ wird als Stichprobe bezeichnet
+\item Wir interessieren uns f\"{u}r Aussagen \"{u}ber die Verteilung von $Y$ in $U$; haben aber lediglich Angaben \"{u}ber $Y$ in $S$ vorliegen
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Gesamtheiten und Stichproben (2)}
+\begin{itemize}
+\item In der Stichprobentheorie untersuchen wir nun, was wir \"{u}ber die Verteilung von $Y$ in $U$ auf der Basis einer Stichprobe $S$ sagen k\"{o}nnen
+\item Unmittelbar ersichtlich ist: \"{u}ber sich nicht in der Stichprobe befindende Einheiten kann auf Basis der Stichprobe nichts gesagt werden
+\item Aber auf der Basis von Stichproben, die durch ein bestimmtes Auswahlverfahren gewonnen wurden, k\"{o}nnen wir Hypothesen \"{u}ber die Verteilung von $Y$ in $U$ bilden oder die Plausibilit\"{a}t von Hypothesen \"{u}ber $Y$ in $U$ einsch\"{a}tzen
+\item Wahlbeispiel:
+\begin{itemize}
+  \item von allen ($U$) abgegebenen Stimmen wurde eine Stichprobe $S$ gezogen und ausgez\"{a}hlt. Auf Basis des Ausz\"{a}hlung der Stichprobe k\"{o}nnen Hypothesen \"{u}ber $Y$ in $U$ (Partei ... erreicht mehr als ... Prozent) eingesch\"{a}tzt werden
+\end{itemize}
+\item Grundlegende Voraussetzung der Anwendung der Wahrscheinlichkeits- rechnung im Rahmen der Stichprobentheorie ist die Verwendung eines Zufallsgenerators zur Auswahl der Einheiten aus $U$, die in die Stichprobe $S$ gelangen
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Gesamtheiten und Stichproben (3)}
+Zu beachten ist der folgende grundlegende Unterschied:
+\begin{itemize}
+\item Im Rahmen der Besch\"{a}ftigung mit \emph{datengenerierenden Prozessen} werden Sachverhalte (z.B. das Einkommen von Personen) als durch Zufallsgeneratoren erzeugt gedacht. Gewonnene Kenntnisse \"{u}ber ausgedachte \emph{datengenerierende Prozesse} sollen helfen, \"{u}ber soziale Prozesse nachzudenken.
+\item In der Stichprobentheorie geht es nicht um das \emph{Spekulieren} \"{u}ber das Zustandekommen sozialer Sachverhalte, sondern diese werden als gegeben vorausgesetzt. Zufallsgeneratoren dienen nur der Auswahl von Einheiten aus einer Grundgesamtheit $U$ in eine Stichprobe $S$: Aufgrund der Stichprobe sollen dann Hypothesen \"{u}ber die Grundgesamtheit einsch\"{a}tzbar gemacht werden.
+\item Wir wollen im Folgenden unter einer Stichprobe \emph{eine mit Hilfe eines Zufallsgenerators zuf\"{a}llig ausgew\"{a}hlte Teilmenge aus einer endlichen Grundgesamtheit} verstehen
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Grundproblem der Stichprobentheorie (1)}
+Stichproben werden aus Grundgesamtheiten gezogen, um \"{u}ber Charakteristika der Grundgesamtheit etwas zu erfahren
+\begin{itemize}
+\item Im Folgenden wollen wir uns nur mit Zufallsstichproben besch\"{a}ftigen:
+\begin{itemize}
+\item D.h. wir w\"{a}hlen aus den $N$ Elementen der Grundgesamtheit mit Hilfe eines Zufallsgenerators $n$ Elemente aus
+\item Diese $n$ ausgew\"{a}hlten Elemente bilden eine Stichprobe $S$
+\end{itemize}
+\end{itemize}
+Analog k\"{o}nnen wir auch die Stichproben betrachten:
+\begin{itemize}
+\item Aus der Menge aller m\"{o}glichen Stichproben $\mathcal{S}$ w\"{a}hlen wir eine Stichprobe $S$ aus
+\item Wenn wir eine bestimmte Stichprobe $S$ gezogen haben, k\"{o}nnen wir die Werte der interessierenden Variable $Y$ bei diesen $n$ Einheiten der Stichprobe messen
+\item Leider: \"{u}ber die $N-n$ Einheiten, die nicht in der konkreten Stichprobe $S$ sind, k\"{o}nnen wir auf Basis der Kenntnis der erhobenen $n$ Einheiten nichts sagen
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Grundproblem der Stichprobentheorie (2)}
+\begin{itemize}
+  \item Haben wir z.B. eine Grundgesamtheit mit 5 Frauen und 5 M\"{a}nnern und ziehen eine einfache Zufallsstichprobe vom Umfang $n = 4$; k\"{o}nnen wir nur den Anteil der Frauen in der Stichprobe ermitteln
+\item \"{U}ber das Geschlecht der $6$ nicht in die Stichprobe gelangten Personen k\"{o}nnen wir nichts sagen
+\item Wir k\"{o}nnen nat\"{u}rlich eine Stichprobe ziehen, die nur M\"{a}nner oder nur Frauen enth\"{a}lt. Entsprechend w\"{u}rden wir dann zu ziemlich schlechten Vermutungen \"{u}ber den Anteil der Frauen in der Grundgesamtheit gelangen
+\item Warum dann die Besch\"{a}ftigung mit Stichprobentheorie?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Grundproblem der Stichprobentheorie (3)}
+\begin{itemize}
+  \item Wir versuchen nicht direkt, auf Basis der konkreten vorliegenden Stichprobe etwas \"{u}ber die nicht erfassten Einheiten zu sagen
+\item Sondern wir gehen gedanklich von der Grundgesamtheit aus und betrachten alle m\"{o}glichen Stichproben $\mathcal{S}$
+\item Einfaches Ausz\"{a}hlen aller m\"{o}glichen Stichproben ergibt dann die Wahrscheinlichkeitsverteilung (z.B. des Anteils von Frauen) einer Stichprobe $n = 4$
+\item Dieses Verfahren nennt man den \emph{direkten Schluss}
+\item Auf diese Art k\"{o}nnen wir verschiedene Auswahl- und Sch\"{a}tzverfahren beurteilen
+\item Wir w\"{u}rden lieber solche Auswahl- (z.B. freie Zufallsauswahl) und Sch\"{a}tzverfahren (z.B. Mittelwert) w\"{a}hlen, die mit hoher Wahrscheinlichkeit zu Sch\"{a}tzwerten f\"{u}hren, die nahe bei dem interessierenden Grundgesamtheitsparameter liegen
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Grundproblem der Stichprobentheorie (4)}
+\begin{itemize}
+\item Tats\"{a}chlich kennen wir nat\"{u}rlich die Grundgesamtheit nicht
+\item D.h. wir k\"{o}nnen nur allgemeine Vorz\"{u}ge und Nachteile bestimmter Verfahren beurteilen
+\item Auf Basis einer einzigen vorliegenden Stichprobe k\"{o}nnen wir nur versuchen, Hypothesen \"{u}ber die Grundgesamtheit einsch\"{a}tzbar zu machen
+\item Eine Stichprobe mit 4 Frauen $(p = 1)$ w\"{u}rde uns (f\"{a}lschlicherweise) der (in diesem Fall wahren) Hypothese $p = 0.5$ wenig Vertrauen entgegenbringen lassen
+\item Denn unter der Hypothese haben Stichproben mit $p = 1$ eine geringe Wahrscheinlichkeit gezogen zu werden
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Populationswerte}
+Ziel der Stichprobentheorie sind Aussagen \"{u}ber Populationswerte
+\begin{itemize}
+\item Populationswerte sind Ma{\ss}zahlen (Anteile, Mittelwerte, etc.) der endlichen Grundgesamtheit
+\item Stichproben sollen ausgew\"{a}hlte Teilmengen nur dann hei{\ss}en, wenn die Auswahl zuf\"{a}llig war $\rightarrow$ der Prozess der Ziehung ist genau definiert (Zufallsgenerator!)
+\item Zuf\"{a}llig ist, welche Grundgesamtheitselemente in die Stichprobe gelangen
+\item Damit sind auch die f\"{u}r die Stichprobe berechneten Ma{\ss}zahlen zuf\"{a}llig
+\item Sch\"{a}tzer sind Ma{\ss}zahlen, die auf Basis der Stichprobe berechnet werden, die Ma{\ss}zahlen der Grundgesamtheit aber m\"{o}glichst gut \emph{treffen} sollen
+\item Gew\"{u}nschte Eigenschaften sind
+    \begin{itemize}
+    \item Erwartungstreue
+    \item Geringe Varianz
+    \item M\"{o}glicherweise trade-off zwischen Erwartungstreue und Varianz
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Design einer Zufallsstichprobe}
+Beispiel für Stichprobendesigns:
+  \begin{itemize}
+    \item Population von 5 Merkmalstr\"{a}gern (A,B,C,D,E)
+    \item Ziel ist es, 2 Einheiten in Form einer Stichprobe zu ziehen. Wir haben folgende M\"{o}glichkeiten:
+    \begin{align*}
+      s_1 &= (A,B),& s_2 &= (A,C),& s_3 &= (A,D),& s_4 &= (A,E),& s_5 &= (B,C)\\
+      s_6 &= (B,D),& s_7 &= (B,E),& s_8 &= (C,E),& s_9 &= (C,E),& s_{10} &= (D,E)
+    \end{align*}
+    \item Zuordnung von Wahrscheinlichkeiten:
+    \begin{enumerate}
+      \item Alle Stichproben haben die gleiche Wahrscheinlichkeit von $1/10$\\ $\rightarrow$ \textbf{einfache Zufallsstichprobe}
+      \item In Stichprobe soll ein Konsonant und Vokal vorkommen, also nur $s_1$, $s_2$, $s_3$, $s_7$, $s_9$ und $s_{10}$ zul\"{a}ssig, diese bekommen jeweils die Wahrscheinlichkeit $1/6$\\ $\rightarrow$ \textbf{geschichtete Stichprobe}
+      \item Element A soll besonders wichtig sein: alle Stichproben, die A enthalten, erhalten eine gr\"{o}{\ss}ere Wahrscheinlichkeit, zum Beispiel: $P(S_1)= P(s_2)=P(s_3)=P(s_4)=\frac{2}{14}$ und $P(s_5)=P(s_6)=P(s_7)=P(s_8)=P(s_9)=P(s_{10})=\frac{1}{14}$\\ $\rightarrow$ \textbf{probabilities proportional to size}
+    \end{enumerate}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Materialien zur Vorlesung}
+\begin{itemize}
+\item Infos und Materialien: \texttt{https://mutschler.eu/teaching}
+\item Passwort: dortmund
+\item Termine: 
+\begin{itemize}
+\item Vorlesung: Donnerstags, 12.30-14.00 
+\item \"{U}bung: Donnerstags, 14.15-15.45
+\item Vorlesung und Übung werden nicht streng getrennt, wir haben also zwei Termine
+\item Bitte bringen Sie ihren Laptop mit vorinstallierten R mit
+\end{itemize}
+\item Achtung: Vorlesung f\"{a}llt aus am 25.05. (Feiertag), 15.06. (Feiertag), 06.07, 13.07 und 20.07.
+\item Pr\"{u}fung: Klausur, Termin nach Absprache
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Literatur}
+  \begin{itemize}
+    \item Behr (2015): Theory of Sample Survey with R
+    \item Cochran (1972): Stichprobenverfahren
+    \item Kauermann und K\"{u}chenhoff (2011): Stichproben
+    \item S\"{a}rndal, Swensson und Wretman (1992): Model Assisted Survey Sampling
+    \item Thompson (1997): Theory of Survey Samples
+    \item Thompson (2002): Sampling
+  \end{itemize}
+\end{frame}
+
+\end{document} 

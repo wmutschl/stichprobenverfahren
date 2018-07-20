@@ -1,0 +1,336 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = de_DE
+\documentclass{article}
+
+%\usepackage{answers} % Lösungen werden in Datei ans.tex gespeichert, aber nicht angezeigt. Ganz unten im Dokument kann man die Lösungen auch einbinden.
+\usepackage[nosolutionfiles]{answers} %Lösungen werden direkt bei Aufgabe angezeigt
+
+\Newassociation{solution}{Solution}{ans}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[a4paper,bottom=1.5in,top=1.5in]{geometry}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,pdfstartview={FitH},plainpages = false,linkcolor = black }
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\lhead{\small Name, Vorname:}
+\rhead{\thepage}
+\rfoot{}
+\cfoot{}
+\usepackage{amssymb,amsmath,amsfonts}
+\usepackage{lmodern}
+\usepackage{csquotes}
+
+\parindent0mm
+\parskip1.5ex plus0.5ex minus0.5ex
+\renewcommand{\thesection}{{Aufgabe \arabic{section}:}}
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand\labelenumi{(\theenumi)}
+
+
+\begin{document}
+	
+	\title{Stichprobenverfahren\\ -- Klausur --}	
+	\author{Dr. Willi Mutschler}
+	\date{10. August 2017}
+	\maketitle\thispagestyle{empty}
+	Bitte ausf\"ullen: \\[.3cm]
+	{\renewcommand{\arraystretch}{2} \small \normalsize
+		\begin{tabular}{|p{.475\textwidth}|p{.48\textwidth}|} \hline
+			Name, Vorname: \hfill & Geburtsdatum: \hfill \\[1cm] \hline Matrikelnummer: \hfill & Unterschrift: \hfill \\ [1cm]\hline
+	\end{tabular}}
+	
+	\vspace{.4cm}
+	
+	\renewcommand{\baselinestretch}{1.3} \small \normalsize
+	
+	Hinweise: \\
+	\rm Die Klausur besteht aus acht Aufgaben, die alle zu bearbeiten sind.
+	
+	Sie dürfen einen Taschenrechner und ein einseitig handschriftlich beschriebenes DIN A4 Blatt als Hilfsmittel verwenden. Dieses wird am Ende eingesammelt, jedoch nicht bewertet.
+	
+	Die Bearbeitungszeit beträgt 90 Minuten.	
+	
+	{\bf Bitte schreiben Sie Ihren Namen auf jedes Blatt!}
+	
+	\vspace{.4cm}
+\textbf{Ergebnis}:
+\vspace{.4cm}	~\\
+\begin{tabular}{|p{.3\textwidth}|p{.3\textwidth}|p{.33\textwidth}|}
+	\hline 
+	Punkte & Note & Unterschrift \\ [1cm]
+	\hline 
+\end{tabular} 
+	\newpage~\thispagestyle{empty}\newpage
+	
+	\Opensolutionfile{ans}[ans]
+	
+	\setcounter{page}{1}
+
+\section{Einfache Zufallsstichprobe ohne Zurücklegen}
+Betrachten Sie eine Grundgesamtheit mit zu untersuchendem Merkmal $Y$ mit folgenden Werten:
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c}	 
+	Y : & 1 & 2 & 4 & 3 & 5 & 7 & 6 & 8 & 9 \\ 
+%	\hline 
+%	X : & 1 & 1 & 1 & 2 & 2 & 2 & 3 & 3 & 3 
+\end{tabular} 
+\end{center}
+Der Mittelwert und die Varianz von $Y$ in der Grundgesamtheit sind $\bar{Y}_U=5$ und $S_{y_U}^2=7.5$.
+
+Betrachten Sie eine einfache Zufallsstichprobe ohne Zurücklegen der Größe $n=6$.
+\begin{enumerate}
+		\item Berechnen Sie die Anzahl aller möglichen Stichproben.
+		\item Wie ist die Horvitz-Thompson Schätzfunktion für den Mittelwert der Grundgesamtheit in diesem Fall definiert? Zeigen Sie, dass diese unverzerrt ist.
+		\item Berechnen Sie die Varianz des Horvitz-Thompson Mittelwertschätzers für obige Daten.
+	\end{enumerate}
+
+\paragraph{Antwort:}
+\begin{solution} 5 Punkte
+\begin{enumerate}
+	\item $M=\binom{9}{6}=84$ [1 Punkt]
+	\item Hier Einschlusswahrscheinlichkeit:$E(I_k)=\pi_k = \frac{n}{N}$, somit HT-Schätzer: $$\hat{\bar{y}}=\frac{1}{N} \sum_s \frac{y_k}{\pi_k}=\frac{1}{N}\sum_s \frac{y_k}{\frac{n}{N}}= \frac{1}{n}\sum_s y_k = \bar{y}_s$$
+	Erwartungstreu, da:
+	$$E(\hat{\bar{y}}) = E[\frac{1}{n}\sum_U I_k y_k] = \frac{1}{n}\sum_U y_k E(I_k)=\frac{1}{n}\sum_U y_k \frac{n}{N} = \frac{1}{N}\sum_U y_k=\bar{y}_U$$ [3 Punkte]
+	\item $V(\hat{\bar{y}})= \frac{1-\frac{n}{N}}{n} S_{y_U}^2 =0.4167$ [1 Punkt]
+\end{enumerate}
+\end{solution}
+~\newpage
+
+
+
+\section{Geschichtete Zufallsstichprobe}
+Betrachten Sie eine Grundgesamtheit mit zu untersuchendem Merkmal $Y$ sowie Attribut $X$, welche folgende Werte annehmen:
+\begin{center}
+	\begin{tabular}{c|c|c|c|c|c|c|c|c|c}	 
+		Y : & 1 & 2 & 4 & 3 & 5 & 7 & 6 & 8 & 9 \\ 
+		\hline 
+		X : & 1 & 1 & 1 & 2 & 2 & 2 & 3 & 3 & 3 
+	\end{tabular} 
+\end{center}
+Der Mittelwert und die Varianz von $Y$ in der Grundgesamtheit sind $\bar{Y}_U=5$ und $S_{y_U}^2=7.5$. 
+
+Betrachten Sie eine geschichtete Zufallsstichprobe der Größe $n=6$, wobei $X$ die Schichtvariable darstellt. Nehmen Sie hierzu an, dass innerhalb der Schichten eine einfache Zufallsstichprobe mit identischer Größe $n_h=2$ gezogen wird.\\Hinweis: Für die Schichtmittel und Schichtvarianzen gilt: 
+\begin{align*}
+\bar{Y}_{U_1} &=7/3,& \bar{Y}_{U_2}&=5,& \bar{Y}_{U_3}&=23/3,\\ S_{y_{U_1}}^2&=7/3,& S_{y_{U_2}}^2&=4,& S_{y_{U_3}}^2&=7/3.
+\end{align*}
+\begin{enumerate}
+	\item Berechnen Sie die Anzahl aller möglichen Stichproben.
+	\item  Wie ist die Horvitz-Thompson Schätzfunktion für den Mittelwert der Grundgesamtheit in diesem Fall definiert? Zeigen Sie, dass diese unverzerrt ist.
+	\item Berechnen Sie die Varianz des Horvitz-Thompson Mittelwertschätzers für obige Daten.
+	\item Was versteht man unter dem Schichtungsprinzip? Wie sehe die optimale Einteilung in drei Schichten für die obigen Daten aus?
+\end{enumerate}
+\paragraph{Antwort:}
+\begin{solution} 8 Punkte
+	\begin{enumerate}
+		\item $M=\left[\binom{3}{2}\right]^3=27$ [1 Punkt]
+		\item Hier Einschlusswahrscheinlichkeit:$E(I_{hk})=\pi_{hk} = \frac{n_h}{N_h}$, somit HT-Schätzer: 
+		$$\hat{\bar{y}}=\frac{1}{N} \sum_{h=1}^H N_h \bar{y}_{s_h} = \frac{1}{N} \sum_{h=1}^H N_h \frac{1}{n_h} \sum_{k=1}^{n_h} y_k $$
+		Erwartungstreu, da:
+		$$E(\hat{\bar{y}}) = E[\frac{1}{N} \sum_{h=1}^H N_h \frac{1}{n_h} \sum_{k=1}^{N_h} I_{hk} y_k ] = \frac{1}{N} \sum_{h=1}^H N_h \frac{1}{n_h} \sum_{k=1}^{N_h} E(I_{hk}) y_k = \frac{1}{N} \sum_{h=1}^H N_h \frac{1}{n_h} \sum_{k=1}^{N_h} \frac{n_h}{N_h} y_k = \frac{1}{N}\sum_{h=1}^H \sum_{k=1}^{N_h} y_k	=\bar{y}_U$$ [4 Punkte]
+		\item $V(\hat{\bar{y}})= \frac{1}{N^2} \sum_{h=1}^H N_h^2 \frac{1-\frac{n_h}{N_h}}{n_h} S_{y_{U_h}}^2 = 0.1605$ [1 Punkt]
+		\item Die Schichten sollten so gewählt werden, dass die Variablen (oder Merkmalsträger) innerhalb einer Schicht so ähnlich wie möglich sind. Die einzelnen Schichten sollten sich untereinander so weit wie möglich unterscheiden.
+		
+		Eine optimale Aufteilung wäre demnach:
+		\begin{center}
+			\begin{tabular}{c|c|c|c|c|c|c|c|c|c}	 
+				Y : & 1 & 2 & 4 & 3 & 5 & 7 & 6 & 8 & 9 \\ 
+				\hline 
+				X : & 1 & 1 & 2 & 1 & 2 & 3 & 2 & 3 & 3 
+			\end{tabular} 
+		\end{center}
+		 [2 Punkte]
+	\end{enumerate}
+\end{solution}
+\newpage
+
+
+\section{Cluster Zufallsstichprobe}
+Betrachten Sie eine Grundgesamtheit mit zu untersuchendem Merkmal $Y$ sowie Attribut $X$, welche folgende Werte annehmen:
+\begin{center}
+	\begin{tabular}{c|c|c|c|c|c|c|c|c|c}	 
+		Y : & 1 & 2 & 4 & 3 & 5 & 7 & 6 & 8 & 9 \\ 
+		\hline 
+		X : & 1 & 1 & 1 & 2 & 2 & 2 & 3 & 3 & 3 
+	\end{tabular} 
+\end{center}
+Der Mittelwert und die Varianz von $Y$ in der Grundgesamtheit sind $\bar{Y}_U=5$ und $S_{y_U}^2=7.5$. 
+
+Betrachten Sie nun eine Zufallsstichprobe mithilfe von Clustern, wobei $X$ die Clusterzugehörigkeitsvariable darstellt. Die Stichprobe soll aus $n_I = 2$ Clustern bestehen, wobei diese mit identischen Einschlusswahrscheinlichkeiten gezogen werden.
+\begin{enumerate}
+	\item Was lässt sich allgemein über die Stichprobengröße $n$ bei einer Cluster-Stichprobe aussagen? Gilt dies auch in dem vorliegenden Fall?
+	\item  Wie ist die Horvitz-Thompson Schätzfunktion für den Mittelwert der Grundgesamtheit in diesem Fall definiert? Zeigen Sie, dass diese unverzerrt ist.
+	\item Berechnen Sie die Varianz des Horvitz-Thompson Mittelwertschätzers für obige Daten.
+	\item Was versteht man unter dem Clusterprinzip? Wie sehe die optimale Aggregierung der Merkmalsträger in drei Cluster für die obigen Daten aus? 
+\end{enumerate}
+\paragraph{Antwort:}
+\begin{solution} 10 Punkte
+	\begin{enumerate}
+		\item Normalerweise ist $n$ eine Zufallsgröße, da die Anzahl an Merkmalsträgern innerhalb der ausgewählten Cluster unterschiedlich sein kann. Hier haben jedoch alle Cluster eine identische Größe, somit ist $n=2\cdot3 =6$ fix.  [2 Punkte]
+		\item Hier Einschlusswahrscheinlichkeit:$E(I_{Ii})=\pi_{Ii} = \frac{n_I}{N_I}$, somit HT-Schätzer: 
+		$$\hat{\bar{y}}=\frac{1}{N}\hat{t}_\pi = \frac{1}{N}\sum_{s_I} \frac{t_i}{\pi_{Ii}}= \frac{1}{N}N_I \sum_{s_I} \frac{t_i}{n_I}= \frac{1}{N} N_I \sum_{s_I} \sum_{U_i} \frac{y_k}{n_I}$$
+		Erwartungstreu, da:
+		$$E(\hat{\bar{y}}) = E[\frac{1}{N} N_I \sum_{s_I} \sum_{U_i} \frac{y_k}{n_I}] = \frac{N_I}{N} \sum_{s_I} \sum_{U_i} y_k \frac{E(I_{Ik})}{n_I} = \frac{N_I}{N} \sum_{s_I} \sum_{U_i} y_k \frac{n_I/N_I}{n_I} = \frac{1}{N} \sum_{s_I} \sum_{U_i} y_k = \frac{1}{N} \sum_U y_k = \bar{y}_U$$ [4 Punkte]
+		\item Es gilt (mit den Hilfswerten aus dem Aufgabentext zu Aufgabe 2): $\bar{t}_{U_I}= \frac{7}{3}+5+\frac{23}{3}=15$ und $S_{t U_I}^2 = \frac{1}{N_I -1}\sum_{U_I} (t_i - \bar{t}_{U_I})^2=\frac{1}{3-1}\left((3\cdot\frac{7}{3}-15)^2 + (3\cdot 5-15)^2+(3 \cdot\frac{23}{3}-15)^2\right)=64$. Somit $V(\hat{\bar{y}})= \frac{1}{N^2} N_I^2 \frac{1}{n_I}(1-\frac{n_I}{N_I}) S_{tU_I}^2 = 1.1852$ [2 Punkte]
+		\item Cluster sollten so gewählt werden, dass innerhalb eines Clusters die Variablen (oder Merkmalsträger) so heterogen wie möglich sind. Die einzelnen Cluster sollten sich aber so wenig wie möglich voneinander unterscheiden.
+		
+		Eine optimale Aufteilung wären demnach Cluster mit gleichem Mittelwert:
+		\begin{center}
+			\begin{tabular}{c|c|c|c|c|c|c|c|c|c}	 
+				Y : & 1 & 2 & 4 & 3 & 5 & 7 & 6 & 8 & 9 \\ 
+				\hline 
+				X : & 1 & 3 & 2 & 2 & 1 & 3 & 3 & 2 & 1 
+			\end{tabular} 
+		\end{center}
+		[2 Punkte]
+	\end{enumerate}
+\end{solution}
+~\newpage
+
+\section{Einfache Zufallsstichprobe mit Zurücklegen}
+Aus einer Grundgesamtheit vom Umfang $N=10$ wird eine Stichprobe vom Umfang $n=3$ mit Zurücklegen
+gezogen. Die Auswahlwahrscheinlichkeiten $p_i$, $i=1, \ldots, 10$, sind dabei unterschiedlich.
+Folgende Werte mit zugehörigen Auswahlwahrscheinlichkeiten wurden gezogen:\\
+$$y_1 = 3, \ p_1 = 0.06, \quad y_2=10, \ p_2 = 0.20, \quad y_3 = 7, \ p_3 = 0.10$$
+\begin{enumerate}
+	\item[(a)] Schätzen Sie die Populationssumme mit dem Hansen-Hurwitz-Schätzer und schätzen Sie die
+	Varianz dieses Schätzers!
+	\item[(b)] Schätzen Sie die Populationssumme mit dem Horvitz-Thompson-Schätzer und schätzen Sie
+	die Varianz dieses Schätzers!
+\end{enumerate}
+\paragraph{Antwort:}
+\begin{solution} 9 Punkte
+\begin{enumerate}
+	\item $\hat{t}_{HH}=\frac{1}{n}\sum_{k=1}^n \frac{y_k}{p_k} = \frac{1}{3}(50+50+70)=56,67$ und $$\hat{V}(\hat{t}_{HH}) = \frac{1}{m}\frac{1}{m-1} \sum_{i=1}^m \left(\frac{y_{k_i}}{p_{k_i}}-\hat{t}_{HH}\right)^2 = 44,44$$ [3 Punkte]
+	\item $\pi_k = 1-(1-p_k)^m$, also: $\pi_1 = 0.169, \pi_2 = 0.488, \pi_3=0.271$. Dann $$\hat{t}_{HT}=\sum_{k=1}^n \frac{y_k}{\pi_k}=64,03$$
+	
+	$\pi_{kl} =  Pr(k \& l in s)=Pr(k in s)+ Pr(l in s)-Pr (k in s oder l in s)=\pi_k + \pi_l - [1-(1-p_k -p_l)^m]$. Also: $\pi_{12}=0.0626, \pi_13 = 0.033,
+		\pi_{23} = 0.102$. Somit:
+		$$\hat{V}(\hat{t}_{HT})=\sum\sum_s \pi_{kl}^{-1} \left(\frac{\pi_{kl}}{\pi_k \pi_l}-1\right)y_k y_l = -449.6851$$ [6 Punkte]
+\end{enumerate}
+\end{solution}
+~\newpage
+
+\section{Optimale Schichtgröße}
+Es soll geschätzt werden, wie viel Geld die Haushalte einer Großstadt auf ihren laufenden Konten haben.
+Die Haushalte werden nach der Höhe ihres Einkommens in zwei Schichten gegliedert.
+Es wird vermutet, dass der Kontostand eines Haushalts mit größerem Einkommen neunmal so groß wie der Kontostand
+eines Haushalts mit kleinerem Einkommen ist. Ferner wird angenommen, dass $S_h$ proportional der
+Quadratwurzel des Schichtmittels ist.\\
+Es gibt 4000 Haushalte in der Schicht mit größerem und 20000 Haushalte in der Schicht mit kleinerem Einkommen.
+Es soll eine Stichprobe vom Umfang $n=1000$ gezogen werden.
+
+Teilen Sie den Gesamtstichprobenumfang optimal (ohne Berücksichtigung einer Kostenfunktion) auf die beiden Schichten auf!
+\paragraph{Antwort:}
+\begin{solution} [5 Punkte]\\
+$N_1 = 20000, N_2 = 4000, n=1000, 9 \bar{y}_{s_1} = \bar{y}_{s_2}$. \\Damit: $S_{y_1} = k \sqrt{\bar{y}_{s_1}}$ und $S_{y_2} = k \sqrt{\bar{y}_{s_2}} = k 3 \sqrt{\bar{y}_{s_1}}$. Einsetzen in $$n_h^{opt}=n\frac{N_h S_{y_h}}{N_1 S_{y_1}+N_2 S_{y_2}}$$ ergibt: $n_1^{opt}=375$ und $n_2^{opt}=625$.
+\end{solution}
+~\newpage
+
+\section{Anteilswerte und Modelbasierte Schätzung}
+Es soll der Stimmenanteil der OP (Opportunistische Partei) bei der bevorstehenden Kommunalwahl vorhergesagt werden. Man wählt deshalb $n=200$ Wahlberechtigte zufällig aus, und fragt sie nach ihrer Einstellung. 80 Wahlberechtigte erklären, die OP wählen zu wollen; 60 dieser 80 Befragten hatten bereits bei der letzten Wahl die OP gewählt; von den 120 Befragten, die die OP nicht wählen wollen, hat bei der letzten Wahl keiner die OP gewählt.
+\begin{enumerate}
+	\item[(a)] Warum können Sie bei dieser Aufgabe den Auswahlsatz vernachlässigen?
+\end{enumerate} 
+Vernachlässigen Sie den Auswahlsatz im Folgenden.
+\begin{enumerate}
+	\item[(b)] Schätzen Sie den gesuchten Anteilswert und geben Sie den Standardfehler der Schätzung an.
+	\item[(c)] Wie würden Sie den gesuchten Anteilswert schätzen, wenn bei der letzten Gemeinderatswahl die OP 25\% der Wählerstimmen errungen hätte? Berechnen Sie den Differenzen- und Quotientenschätzer. Eine Berechnung des Standardfehlers ist nicht notwendig.
+\end{enumerate}
+\paragraph{Antwort:}
+\begin{solution}
+	[6 Punkte]
+	\begin{enumerate}
+		\item Da es sich um eine Wahl handelt, bei der die Wahlbevölkerung im Millionenbereich ist, also $N>50$ Millionen, kann man den Auswahlsatz $f=n/N$ vernachlässigen. [1 Punkt]
+		\item $\hat{P} = \frac{80}{200}=0.4$ und 
+		\begin{align*}
+		\hat{V}(\hat{P}) = \frac{1}{n}(1-n/N)S_{y_s}^2 &\approx \frac{1}{n(n-1)}\left(\sum_{k=1}^n y_k^2 - n \bar{y}_s^2\right)\\
+		&= \frac{1}{n(n-1)}\left(n \hat{P}-n\hat{P}^2\right) = \frac{1}{n-1}\hat{P}(1-\hat{P}) = 0.0012
+		\end{align*}
+		Somit ist der Standardfehler $\sqrt{\hat{V}(\hat{P})}=0.0347$ [3 Punkte]
+		\item Vorinformationen: In der Grundgesamtheit: $\bar{x}_U = 0.25$. In der Stichprobe: $\bar{x}_s = \frac{60}{200} = 0.3$
+		\begin{itemize}
+			\item Differenzenschätzung: $\hat{P} = \bar{y}_s - \bar{x}_s + \bar{x}_U = 0.4-0.3+0.25 = 0.35$
+			\item Verhältnisschätzung: $\hat{P}=\bar{x}_U \frac{\bar{y}_s}{\bar{x}_s} = 0.25 \frac{0.4}{0.3}=1/3=0.33$
+		\end{itemize}
+	[2 Punkte]
+	\end{enumerate}
+\end{solution}
+
+~\newpage
+
+
+\section{Einschlusswahrscheinlichkeiten}
+Da der Einschlussindikator $I_k$ Bernoulli verteilt ist, gelten für ein beliebiges Stichprobendesign $p(s)$ für alle $k,l=1,...,N$ folgende Zusammenhänge:
+$$(i)~ E(I_k)=\pi_k, \qquad (ii)~  V(I_k) = \pi_k(1-\pi_k) \qquad (iii)~ Cov(I_k,I_l)=\pi_{kl}-\pi_k \pi_l,$$
+Für die Stichprobengröße $n_s$ gilt überdies $n_s =\sum_U I_k$.
+
+Zeigen Sie, dass bei einem Stichprobendesign mit fixer Stichprobengröße, $n_s=n$, folgendes gilt:
+\begin{enumerate}
+\item $\sum_U \pi_k = n$
+\item $\underset{k\neq l}{\sum\sum_U}\pi_{kl}=n(n-1)$
+\item $\sum_{\underset{l\neq k}{l \in U}} \pi_{kl} = (n-1)\pi_k$
+\end{enumerate}
+Hinweis: Betrachten Sie $E(n_s)$ und $V(n_s)$.
+\paragraph{Antwort:}
+\begin{solution} [9 Punkte]
+	\begin{enumerate}
+		\item $ n = E(n_s) = E(\sum_U I_k) = \sum_U E(I_k) = \sum_U \pi_k$ [2 Punkte]
+		\item $0 = V(n_s) = \sum\sum_U Cov(I_k,I_l) = \left(\sum\sum_{U,k\neq l }  \pi_{kl}-\pi_k \pi_l\right) + \sum_U \pi_k(1-\pi_k)$. Somit:
+		$$ \sum\sum_{U,k\neq l }\pi_{kl} = \sum_{U,k\neq l } \pi_k \pi_l + \sum_U \pi_k \pi_k -\sum_U \pi_k = \sum\sum_U \pi_k \pi_l - \sum_U \pi_k = \sum_U \pi_k \sum_U \pi_l - \sum_U \pi_k = n \cdot n - n = n(n-1)$$
+		[4 Punkte]
+		\item $\sum_{\underset{l\neq k}{l \in U}} \pi_{kl} = \sum_{l\in U} \pi_{kl} - \pi_{kk} = \sum_{l\in U}E(I_k I_l) - \pi_k = E(I_k \sum_U I_l)-\pi_k = n E(I_k)-\pi_k = (n-1)\pi_k$. [3 Punkte]
+	\end{enumerate}
+\end{solution}
+
+~\newpage
+
+
+\section{Nichtnegativitätsbedingung}
+Der Yates-Grundi-Sen Schätzer für die Varianz des $\pi$-Schätzers der Merkmalssumme ist: $$\hat{V}(\hat{t}_\pi)=-\frac{1}{2} \sum\sum_s \check{\Delta}_{kl}(\check{y}_k-\check{y}_l)^2$$
+wobei $p(s)$ ein Stichprobendesign mit fixer Stichprobengröße ist und $\pi_{kl}>0$ für alle $k,l = 1,...,N$. 
+\begin{enumerate}
+	\item Benennen Sie eine Bedingung, so dass der Schätzer immer nichtnegativ ist.
+	\item Überprüfen Sie diese Bedingung für die einfache Zufallsstichprobe ohne Zurücklegen.
+\end{enumerate} 
+\paragraph{Antwort:}
+\begin{solution}
+[4 Punkte]
+\begin{enumerate}
+	\item Es muss gelten, dass $\Delta_{kl}=Cov(I_k,I_l)=\pi_{kl}-\pi_k\pi_l <0$ für alle $k\neq l \in U$. Für $k=l$ ist $\check{y}_k - \check{y}_l = 0$ immer gegeben.  [1 Punkt]
+	\item Für $k\neq l$:
+	\begin{align*}
+	\Delta_{kl} = \frac{n(n-1)}{N(N-1)}-\left(\frac{n}{N}\right)^2 <0\\
+	\frac{n-1}{N-1}< \frac{n}{N}\\
+	N \cdot n -N < N\cdot n -n\\
+	n < N
+	\end{align*}
+	ist immer erfüllt. 
+	[3 Punkte]
+\end{enumerate}
+\end{solution}
+~\newpage
+
+
+
+\end{document}
+
+\section{}
+Bernoulli Sampling: Zeigen Sie, dass der alternative Schätzer unverzerrt und eine kleinere Varianz hat als der pi Schätzer. Eventuell auch designeffekt berechnen und vergleichen.
+
+\section{title}
+Zeigen sie $\pi ps$ Sampling für $n=2$, dass bei Brewer gilt, dass $\Delta_{kl} <0$ und somit Yates-Grundy-Sen anwendbar ist.
+
+\section{title}
+Clusterschätzer für Mittelwerte herleiten mit hilfsmittel quotienten...
+
+\section{title}
+Zeigen Sie, dass beide Schätzer für die Varianz des $pi$-Schätzers für den Mittelwert beim stratified simple random sampling identisch sind.
+
+\section{title}
+S119 Kauermann: er Varianzschätzer verlangt die Angabe und Kenntnis der Auswahlwahrscheinlichkeiten zweiter Ordnung. Um dies zu
+umgehen, hat Jessen (1969) eine alternative Varianzbestimmung vorgeschlagen, die sich wie folgt berechnet
+Andere Varianzschätzer im Kauermann, zeigen Sie unverzerrtheit!

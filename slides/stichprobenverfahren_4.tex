@@ -1,0 +1,309 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = de_DE
+
+\documentclass[9pt]{beamer}
+\usetheme{metropolis}
+\usepackage{iftex}
+
+\ifPDFTeX
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amsfonts,amssymb}
+\fi
+
+\ifXeTeX
+\fi
+
+\ifLuaTeX
+
+\fi
+
+\usepackage[ngerman]{babel}
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+%\setsansfont[BoldFont={Fira Sans SemiBold}]{Fira Sans Book}
+%\setsansfont{libertine}
+%\setmonofont{Helvetica Mono}
+
+\usepackage{appendixnumberbeamer}
+    % Backup slides
+    % call \appendix before your backup slides, metropolis will automatically turn off slide numbering and progress bars for slides in the appendix.
+
+\usepackage{booktabs}
+    % Better tables
+    % \toprule wird zu Beginn der Tabelle gesetzt
+    % \midrule werden innerhalb der Tabelle als horizontale Trennstriche verwendet
+    % \cmidrule{1-2} werden innerhalb der Tabelle als horizontale Trennstriche zwischen Spalten 1-2 verwendet
+    % \bottomrule setzt den Schlussstrich unter die Tabelle.
+    % F\"{u}r top- und bottomrule wird standardm\"{a}{\ss}ig eine dicke Linie verwendet, f\"{u}r midrule und cmidrule eine d\"{u}nne.
+    % Ein zus\"{a}tzlicher Abstand zwischen den Zeilen wird durch den Befehl \addlinespace erreicht.
+\usepackage{csquotes}
+
+%% Set title etc.
+\title{Stichprobenverfahren}
+\subtitle{Einfache Zufallsstichprobe}
+\date[SS2017]{Sommersemester 2017}
+\author{Willi Mutschler (willi@mutschler.eu)}
+
+
+\begin{document}
+\maketitle
+\begin{frame}{Einfache Zufallsstichprobe}
+\begin{itemize}
+	\item Man unterscheidet Modelle
+	\begin{itemize}
+		\item ohne Zurücklegen: $y_1, \dots, y_n$ sind identisch verteilt, aber stochastisch abhängig. Alle Stichproben haben den gleichen Umfang.
+		\item mit Zurücklegen: $y_1, \dots, y_n$ sind unabhängig und identisch verteilt. Die Stichprobengröße ist zufällig.
+	\end{itemize} 
+	\item In der Theorie und Praxis betrachten wir meistens ohne Zurücklegen, aber bei mit Zurücklegen haben einige Schätzfunktionen extrem einfache statistische Eigenschaften, die wir approximativ ausnutzen können
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Einfache Zufallsstichprobe: Mit Zurücklegen (1)}
+\begin{itemize}
+	\item Ziehe $m$ Elemente unabhängig voneinander und derart, dass jede der $N$ Grundgesamtheitselemente mit derselben Wahrscheinlichkeit $1/N$ gezogen wird. Alle $N$ Elemente nehmen an jeder Ziehung teil.
+	\item Bereits gezogene Elemente können erneut gezogen werden 
+	\item[$\hookrightarrow$] Stichprobengröße ist zufällig
+	\item Die Wahrscheinlichkeit, dass ein Element genau $r$ mal in den $m$ Ziehungen auftritt ist
+	\begin{align*}
+	\binom{m}{r}\left(\frac{1}{N}\right)^r \left(1-\frac{1}{N}\right)^{m-r}
+	\end{align*}
+	\item Die Wahrscheinlichkeit, dass ein Element überhaupt nicht gezogen wird, ist $\left(1-\frac{1}{N}\right)^m$. Somit gilt, dass die Wahrscheinlichkeit, dass ein Element $k$ mindestens einmal in der Stichprobe auftritt:
+	\begin{align*}
+	\pi_k = 1- \left(1-\frac{1}{N}\right)^m
+	\end{align*}
+	\item Die Einschlusswahrscheinlichkeiten zweiter Ordnung lauten
+	\begin{align*}
+	\pi_{kl}= 1-2\left(1-\frac{1}{N}\right)^m + \left(1-\frac{2}{N}\right)^m
+	\end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Einfache Zufallsstichprobe: Mit Zurücklegen (2)}
+\begin{itemize}
+\item Unterscheidung des Begriffs Stichprobe wichtig:
+\begin{enumerate}
+	\item Bezeichne $k_i$ das Element, welches in der $i$ten Ziehung gezogen wird $(i=1,\dots,m)$, dann nennen wir
+	\begin{align*}
+	os = (k_1,\dots,k_m)
+	\end{align*}
+	die \enquote{geordnete Stichprobe} mit $p(os)= 1/N^m$. Informationen über Zeitpunkt der Ziehung und Multiplizität vorhanden. 
+	\item Die Menge rein verschiedener Elemente in $os$
+	\begin{align*}
+	s = \{k:k=k_i \text{ für ein i};i=1,\dots,m\}
+	\end{align*}
+	bezeichnen wir als Mengen-Stichprobe $s$ mit Stichprobendesign $p(s)$. Die Kardinalität $n_s$ von $s$ ist eine Zufallsvariable, es gilt $Pr(n_s \leq m)=1$. Informationen über Zeitpunkt der Ziehung und Multiplizität nicht vorhanden.
+\end{enumerate}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Einfache Zufallsstichprobe: Mit Zurücklegen (3)}
+Verallgemeinerung für Design mit ungleichen Wahrscheinlichkeiten
+\begin{itemize}
+\item Sei $Pr[\text{Ziehen von Element k}]=p_k$ mit $\sum_U p_k =1$ und $k$ wird bei jeder der $m$ Ziehung ersetzt, dann gilt 
+\begin{enumerate}
+\item für das geordnete Stichprobendesign
+$Pr[(k_1,k_2,...,k_m)] = p_{k_1}\cdot p_{k_2} \cdot ... \cdot p_{k_m}$
+\item für das Mengen-theoretische Stichprobendesign eine komplizierte Form
+\end{enumerate}
+\item Einschlusswahrscheinlichkeit: $\pi_k = 1-(1-p_k)^m$
+\item Mitteln über den \enquote{p-expanded} Wert des $k$ten Elements $\frac{y_k}{p_k}$, ergibt \small
+\begin{align*}
+\hat{t}_{pwr} = \frac{1}{m} \sum_{i=1}^{m} \frac{y_{k_i}}{p_{k_i}}
+\end{align*}\normalsize
+den unverzerrten $pwr$ Schätzer für die Merkmalssumme $t_U = \sum_U y_k$.
+\item Die Varianz ist \small
+\begin{align*}
+V(\hat{t}_{pwr}) = \frac{1}{m} \sum_U \left(\frac{y_k}{p_k}-t_U\right)^2 p_k
+\end{align*}\normalsize
+und lässt sich unverzerrt schätzen mit\small
+\begin{align*}
+\hat{V}(\hat{t}_{pwr}) = \frac{1}{m} \frac{1}{m-1}\sum_{i=1}^m \left(\frac{y_{k_i}}{p_{k_i}}-\hat{t}_{pwr}\right)^2
+\end{align*}	\normalsize
+\item Dies ist der \enquote{p-expanded with replacement} Schätzer (Hansen und Hurwitz, 1943) 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Einfache Zufallsstichprobe: Mit Zurücklegen (4)}
+\begin{itemize}
+\item Man kann natürlich auch den üblichen $\pi$-Schätzer verwenden: $\hat{t}_\pi = \sum_s \check{y}_k$
+\item Beide Schätzer sind unverzerrt, welcher die kleinere Varianz hat, hängt von den $y$ Werten ab
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Einfache Zufallsstichprobe: Ohne Zurücklegen}
+\begin{itemize}
+	\item Einschlusswahrscheinlichkeiten: $\pi_k = \frac{n}{N}$ und $\pi_{kl}=\frac{n}{N}\frac{n-1}{N-1}$
+	\item Der $\pi$-Schätzer für die Merkmalssumme der Grundgesamtheit U vereinfacht sich zu:
+	\begin{align*}
+	\hat{t}_\pi &= N \bar{y}_s = \frac{1}{f}\sum_s y_k\\
+	V(\hat{t}_\pi) &= N^2 \frac{1-f}{n}S_{y,U}^2\\
+	\hat{V}(\hat{t}_\pi) &= N^2 \frac{1-f}{n}S_{y,s}^2
+	\end{align*}
+	mit 
+	\begin{align*}
+	f&=n/N, & \text{(sampling fraction)}\\
+	S_{y,U}^2&=\frac{1}{N-1}\sum_U (y_k - \bar{y}_U)^2 & \text{(Populationsvarianz)}\\
+	S_{y,s}^2&=\frac{1}{n-1}\sum_s (y_k - \bar{y}_s)^2 & \text{(Stichprobenvarianz)}
+	\end{align*}
+	\item Für den $\pi$-Schätzer für den Mittelwert der Grundgesamtheit $U$ wird durch $N$ geteilt, bei der Varianz des Schätzers durch $N^2$\end{itemize}
+\end{frame}
+
+\begin{frame}{Designeffekt}
+Das Framework der einfachen Zufallsstichprobe ohne Zurücklegen wird häufig als Referenzwert für alternative Schätzmöglichkeiten verwendet
+\begin{itemize}
+	\item Bezeichne $p$ ein alternatives Design mit $\pi$ Schätzer $\hat{t}_\pi$ und $SI$ das Design der einfachen Zufallsstichprobe ohne Zurücklegen mit $\pi$-Schätzer $\hat{t}_{SI}$, dann bezeichnen wir das Varianzverhältnis
+	\begin{align*}
+	deff = \frac{V(\hat{t}_\pi)}{V(\hat{t}_{SI})} =\frac{\sum\sum_U\Delta_{kl} \check{y}_k \check{y}_l}{N^2\left(\frac{1}{n}-\frac{1}{N}\right)S_{y,U}^2}
+	\end{align*}
+	als \enquote{Designeffekt}
+	\item $deff<1$ bedeutet, dass das alternative Design präziser ist
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Schätzung von Domains (1)}
+\begin{itemize}
+	\item In den meisten Umfragen werden Schätzwerte für Untergruppen der Grundgesamtheit, sogenannte \enquote{Domains}, erwünscht
+	\item Beispiele: 
+	\begin{itemize}
+		\item Anteil von Personen über 65 Jahren
+		\item  Durchschnittliche Einkommen von Haushalten mit drei oder mehr Kindern
+	\end{itemize}
+	\item Notation:
+	\begin{itemize}
+		\item $U_d \subset U$ bezeichne eine Unterpopulation der Größe $N_d$
+		\item $P_d = N_d/N$ bezeichne die relative Größe von $U_d$
+	\end{itemize}
+	\item Annahme, dass $N$ bekannt und $N_d$ unbekannt ist	
+	\item Definiere Domain-Indikatorvariable
+	\begin{align*}
+	z_{dk}= \begin{cases}
+	1 & \text{falls } k \in U_d\\
+	0 & \text{sonst}
+	\end{cases} \qquad (k=1,\dots,N)
+	\end{align*}
+	dann
+	\begin{align*}
+	\sum_U z_{dk} = N_d \text{ und } \bar{z}_{dU} = \sum_U z_{dk}/N = N_d/N = P_d
+	\end{align*}
+	\item Also $N_d$ ist Populationssumme und $P_d$ der Populationsmittelwert von $z_d$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Schätzung von Domains (2)}
+\begin{itemize}
+\item Im Rahmen der einfachen Zufallsstichprobe ohne Zurücklegen lassen sich die absolute und relative Größe einer Domain recht einfach schätzen
+\item Definiere $Q_d = 1-P_d$, $n_d = \sum_s z_{dk}$, $p_d = n_d/n$ und $q_d=1-p_d$
+\item Es folgt, dass
+\begin{align*}
+S_{z_d U} = \frac{N}{N-1} P_d Q_d \qquad \text{ und } \qquad	S_{z_d s} = \frac{n}{n-1} p_d q_d
+\end{align*}
+\item Für den $\pi$-Schätzer dann
+\begin{align*}
+\hat{N_d} = N p_d, \qquad V(\hat{N_d}) = N^2 \frac{N-n}{N-1} \frac{P_dQ_d}{n}, \qquad \hat{V}(\hat{N_d}) = N^2 (1-f) \frac{p_d q_d}{n-1}
+\end{align*}
+wobei $\hat{N_d}$ und $ \hat{V}(\hat{N_d})$ unverzerrte Schätzer sind.
+\item Die relative Domaingröße, $P_d=N_d/N$, lässt sich mit $\hat{P_d}=p_d = n_d/n$ schätzen. Die Varianzen sind $N^2$ mal kleiner als die obigen Ausdrücke
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Schätzung von Domains (3)}
+\begin{itemize}
+\item Für die Schätzung der Summe $t_d = \sum_{U_d} y_k$ und Mittelwertes $\bar{y}_{U_d}= \sum_{U_d} y_k/N_d$ einer Untergruppe, definiere
+\begin{align*}
+y_{dk}= \begin{cases}
+y_k & \text{falls } k \in U_d\\
+0 & \text{sonst}
+\end{cases}
+\end{align*}
+dann gilt $t_d = \sum_{U_d} y_k = \sum_U y_{dk}$ und lässt sich schätzen mit
+\begin{align*}
+\hat{t}_{d\pi} = \sum_s y_{dk}/\pi_k = \frac{N}{n} \sum_s y_{dk} = \frac{N}{n}\sum_{s_d}y_k
+\end{align*}
+mit $s_d = U_d \cap s$, d.h. $s_d$ ist die Untermenge an Elementen von $s$, die in die Domain $U_d$ fallen
+\end{itemize}
+\end{frame}
+
+\end{document}
+
+\begin{frame}{Endlichkeitskorrekturen}
+Für eine einfache Zufallsstichprobe ohne Zurücklegen gilt:
+\begin{enumerate}[(i)]
+	\item $E(\bar{y})=\bar{Y}$
+	\item $V(\bar{y}) = \frac{1}{n}\left(1-\frac{n}{N}\right)S_Y^2 = \frac{1}{n}\mathcal{K}\mu_2$
+	\item $E(s_y^2)=S_Y^2$
+	\item $V(s_y^2)=\frac{1}{n}\mathcal{K}_1 \mu_4 - \frac{n-3}{n(n-1)}\mathcal{K}_2 \mu_2^2$
+\end{enumerate}
+mit 
+\begin{align*}
+\mu_k &= \frac{1}{N}\sum_{i=1}^{N}(y_i - \bar{y})^k\\
+\mathcal{K} &= \left(1-\frac{n-1}{N-1}\right)\\
+\mathcal{K}_1 & = \frac{(n-1)N^3 - (n^2+1)N^2+(n^2+n)N}{(n-1)(N-1)(N-2)(N-3)}\\
+\mathcal{K}_2 &= \frac{-(n-3)N^4+(n^2-3n-6)N^3 + (9n+3)N^2 - (3n^2+3n)N}{-(n-3)(N-1)^2(N-2)(N-3)}
+\end{align*}
+Falls $n$ fest, gilt: $\lim\limits_{N\rightarrow\infty}\mathcal{K}=\lim\limits_{N\rightarrow\infty}\mathcal{K}_1=\lim\limits_{N\rightarrow\infty}\mathcal{K}_2=1$.
+\end{frame}
+
+\begin{frame}{}
+Für eine einfache Zufallsstichprobe mit Zurücklegen gilt:
+\begin{enumerate}[(i)]
+\item $E(\bar{y})=\bar{Y}$
+\item $V(\bar{y}) = \frac{1}{n}\mu_2$
+\item $E(s_y^2)=\mu_2$
+\item $V(s_y^2)=\frac{1}{n} \mu_4 - \frac{n-3}{n(n-1)} \mu_2^2$
+\end{enumerate}
+mit 
+\begin{align*}
+\mu_k &= \frac{1}{N}\sum_{i=1}^{N}(y_i - \bar{y})^k\\
+\end{align*}
+\end{frame}
+
+\begin{frame}{Endlichkeitskorrekturen}
+\begin{itemize}
+	\item Größenordnung der $\mathcal{K}$'s ist von zentraler Bedeutung, ob mit oder ohne Zurücklegen gewählt werden darf
+	\item Vor Weiterverarbeitung der Daten (Lineares Modell, Test, ...) muss überprüft werden, ob die relativen Abweichungen der Endlichkeitskorrekturen von 1 nicht zu groß sind, d.h.
+	\begin{align*}
+	(1-\mathcal{K}) &< \varepsilon,&
+	(1-\mathcal{K}_1) &< \varepsilon_1,&
+	(1-\mathcal{K}_2) &< \varepsilon_2
+	\end{align*}
+	\item Für $\mathcal{K}$:
+	\begin{align*}
+	(1-\mathcal{K}) < \varepsilon \Leftrightarrow \frac{V(\bar{y}_{(mZ)})-V(\bar{y}_{(oZ)})}{V(\bar{y}_{mZ})} < \varepsilon\\
+	\Leftrightarrow\frac{n-1}{N-1} < \varepsilon \Leftrightarrow f:= \frac{n}{N} < \varepsilon + \frac{1+\varepsilon}{N}
+	\end{align*}
+	unabhängig von der Varianz der Grundgesamtheit! 
+	\item Für $\mathcal{K}_1$ und $\mathcal{K}_2$ müssen $\mu_2$ und $\mu_4$ separat berechnet werden.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Zentraler Grenzwertsatz (1)}
+Das Auswahlmodell der einfachen Zufallsstichprobe ohne Zurücklegen führt zu dem statistischen Modell
+\begin{itemize}
+	\item $y_1, \dots, y_n$ sind identisch verteilt.
+	\item $E (y_k) = \bar{Y}$.
+	\item $V(y_k) = \mu_2 = \frac{N-1}{N} S_Y^2$
+	\item $y_1, \dots, y_n$ sind stochastisch abhängig.
+	\item $Cov(y_k,y_l) = -\frac{1}{N-1} \mu_2 = -\frac{1}{N}S_Y^2$
+\end{itemize}
+Keine Anwendung des (normalen) Zentralen Grenzwertsatzes, da $y_k$ stochastisch abhängig.
+\end{frame}
+
+\begin{frame}{Zentraler Grenzwertsatz (2)}
+Hájek, J. (1960). Limiting distributions in simple random sampling from a finite population. Publications of the Mathematical Institute of the Hungarian Academy of Sciences 5, 361–374.\\
+\begin{block}{Voraussetzungen}
+	Sei eine unendliche Folge von Urnen der Größe $N_\nu$ gegeben, aus denen einfache Zufallsstichproben ohne Zurücklegen vom Umfang $n_\nu$ gezogen werden. Weiterhin sei:	
+	\begin{itemize}
+		\item $n_\nu \rightarrow \infty$ und $(N_\nu - n_\nu) \rightarrow \infty$, falls $\nu\rightarrow \infty$
+		\item $y_{\nu,k}$ ist Merkmalswert des Elements $k$ in der Grundgesamtheit $\nu$
+	\end{itemize}
+\end{block}
+\end{frame}
+
+\end{document}

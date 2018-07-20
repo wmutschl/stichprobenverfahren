@@ -1,0 +1,185 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = de_DE
+\documentclass[9pt]{beamer}
+\usetheme{metropolis}
+\usepackage{iftex}
+
+\ifPDFTeX
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amsfonts,amssymb}
+\fi
+
+\ifXeTeX
+\fi
+
+\ifLuaTeX
+
+\fi
+
+\usepackage[ngerman]{babel}
+\usepackage{csquotes}
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+%\setsansfont[BoldFont={Fira Sans SemiBold}]{Fira Sans Book}
+%\setsansfont{libertine}
+%\setmonofont{Helvetica Mono}
+
+\usepackage{appendixnumberbeamer}
+    % Backup slides
+    % call \appendix before your backup slides, metropolis will automatically turn off slide numbering and progress bars for slides in the appendix.
+
+\usepackage{booktabs}
+    % Better tables
+    % \toprule wird zu Beginn der Tabelle gesetzt
+    % \midrule werden innerhalb der Tabelle als horizontale Trennstriche verwendet
+    % \cmidrule{1-2} werden innerhalb der Tabelle als horizontale Trennstriche zwischen Spalten 1-2 verwendet
+    % \bottomrule setzt den Schlussstrich unter die Tabelle.
+    % F\"{u}r top- und bottomrule wird standardm\"{a}{\ss}ig eine dicke Linie verwendet, f\"{u}r midrule und cmidrule eine d\"{u}nne.
+    % Ein zus\"{a}tzlicher Abstand zwischen den Zeilen wird durch den Befehl \addlinespace erreicht.
+
+
+%% Set title etc.
+\title{Stichprobenverfahren}
+\subtitle{Schätzung}
+\date[SS2017]{Sommersemester 2017}
+\author{Willi Mutschler\\willi@mutschler.eu}
+
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Notation}
+	\begin{itemize}
+		\item $\theta$ bezeichnet einen Populationsparameter
+		\item $\hat{\theta} = \hat{\theta}(S)$ bezeichnet Schätzfunktion für $\theta$ basierend auf einer zufälligen (noch zu ziehenden) Stichprobe $S$
+		\item $\hat{\theta} = \hat{\theta}(s)$ bezeichnet Schätzwert für $\theta$ basierend auf einer realisierten Stichprobe s
+		\item In der Stichprobentheorie interessieren wir uns für die Eigenschaften von Schätzfunktionen
+		\item Die Verteilung einer Schätzfunktion lässt sich durch Betrachtung aller $M=|\mathcal{S}|$ möglichen Stichproben $s$ bewerkstelligen
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Eigenschaften von Schätzfunktionen}	
+\begin{itemize}
+	\item Erwartungstreue: $E(\hat{\theta}) = \sum_{s\in \mathcal{S}}\hat{\theta}(s)p(s) = \theta$
+	\item Varianz: $V(\hat{\theta}) = \sum_{s \in \mathcal{S}} \left(\hat{\theta}(s)-E(\hat{\theta})\right)^2p(s)$
+	\item Bias: $B(\hat{\theta})=E(\hat{\theta})-\theta$
+	\item Mean Square Error (mse): $E\left[\hat{\theta}-\theta\right]^2 = \sum_{s \in \mathcal{S}} \left(\hat{\theta}(s)-\theta\right)^2 p(s)= V(\hat{\theta}) + [B(\hat{\theta})]^2$
+	\item Variationskoeffizient:
+	\begin{align*}
+	cve(\hat{\theta}) = \frac{[V(\hat{\theta})]^{1/2}}{E(\hat{\theta})} \approx \frac{[\hat{V}(\hat{\theta})]^{1/2}}{\hat{\theta}}
+	\end{align*}
+	Indikator für die Präzision, je kleiner desto besser
+\end{itemize}
+\begin{block}{Frequentistische Betrachtungsweise}
+	In einer langen Serie wiederholter Ziehungen von Stichproben aus der Grundgesamtheit mit Stichprobendesign $p(s)$, werden die Durchschnittswerte einer Statistik $\theta(s)$ und die Varianz der Werte von $\theta(s)$ annähernd ihrem theoretischen Gegenstück entsprechen.
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Der Horvitz-Thompson Schätzer}
+\begin{itemize}
+	\item Der Horvitz-Thompson-Schätzer für z.B. die Merkmalssumme $t_U$ der Grundgesamtheit $U$ lässt sich basierend auf Stichprobe $s$ der Größe $n$ mit  Einschlusswahrscheinlichkeiten $\pi_k$, die bekannt sind, folgendermaßen berechnen:
+	\begin{align*}
+	\hat{t}_\pi = \sum_{U} I_k \frac{y_k}{\pi_k} =\sum_{U} I_k \check{y}_k = \sum_{s} \frac{y_k}{\pi_k} = \sum_{s} \check{y}_k		
+	\end{align*}
+	\item $\check{y}=y_k/\pi_k$ ist der sogenannte \textit{expanded value} von $y_k$ für $k$ in Stichprobe $s$
+	\item Idee: Da die Stichprobe weniger Elemente enthält als die Grundgesamtheit, wird eine \enquote{Expansion} benötigt. Das $k$te Element in der Stichprobe repräsentiert folglich $1/\pi_k$ Elemente der Grundgesamtheit.
+	\item Voraussetzung: $\pi_k>0$ für alle $k\in U$
+	\item Der Horvitz und Thompson (1952) Schätzer ist definiert für alle Stichprobendesigns, häufig findet man auch die Bezeichnung $\pi$-estimator oder inverse probability estimator.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Eigenschaften des Horvitz-Thompson Schätzers (I)}
+\begin{itemize}
+	\item Einschlussindikator ist die einzige Zufallsvariable, deren Wert (1 oder 0) annimmt, hängt nur ab von $S$
+	\item Horvitz-Thompson Schätzer ist unverzerrt:
+	\begin{align*}
+	E\left(\sum_U \frac{I_k}{\pi_k} y_k\right)=\sum_U \frac{y_k}{\pi_k} E(I_k) = \sum_U \frac{y_k}{\pi_k} \pi_k = \sum_U y_k
+	\end{align*}
+	\item Für die Varianz betrachten wir Ziehen ohne Zurücklegen:
+	\begin{align*}
+	Cov(I_k,I_l) &= \Delta_{kl} =: \begin{cases} \pi_k(1-\pi_k), & k=l\\\pi_{kl}-\pi_k\pi_l, & k\neq l\end{cases}\\
+	\check{\Delta}_{kl} &= \frac{\Delta_{kl}}{\pi_{kl}} = \begin{cases}1-\pi_k, & k=l\\ 1-\frac{\pi_k \pi_l}{\pi_{kl}}, & k \neq l
+	\end{cases}
+	\end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Eigenschaften des Horvitz-Thompson Schätzers (II)}
+\begin{itemize}
+	\item Für die Varianz von $\hat{t}_\pi$ gilt dann:
+	\begin{align*}
+	V(\hat{t}_\pi)=\sum\sum_U \Delta_{kl} \check{y}_k \check{y}_l
+	\end{align*}
+	\item Diese lässt sich basierend auf einer realisierten Stichprobe $s$ schätzen mit:
+	\begin{align*}
+	\hat{V}(\hat{t}_\pi)=\sum\sum_s \check{\Delta}_{kl} \check{y}_k \check{y}_l
+	\end{align*}
+	\item Es gilt, dass $E(\hat{V}(\hat{t}_\pi))=V(\hat{t}_\pi)$
+	\item Mithilfe von Einschlusswahrscheinlichkeiten lässt sich die Varianz und ihr Schätzer auch schreiben als:
+	\begin{align*}
+	V(\hat{t}_\pi) &= \sum\sum_U \frac{\pi_{kl}}{\pi_k \pi_l}y_k y_l -\left(\sum_U y_k\right)^2\\
+	\hat{V}(\hat{t}_\pi) &= \sum\sum_s \pi_{kl}^{-1}\left(\frac{\pi_{kl}}{ \pi_k\pi_l}-1\right) y_k y_l
+	\end{align*}
+	\item Voraussetzung: $\pi_{kl}>0$ für alle $k \neq l \in U$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Yates-Grundy Varianz}
+\begin{itemize}
+	\item Alternativ können wir die Varianz auch schreiben als
+	\begin{align*}
+	V(\hat{t}_\pi) = \sum\sum_U \Delta_{kl}\check{y}_k \check{y}_l = \frac{-1}{2} \sum \sum_U \Delta_{kl} \left(\check{y}_{k}-\check{y}_l\right)^2
+	\end{align*}
+	und schätzen mit
+	\begin{align*}	\hat{V}(\hat{t}_\pi) = \frac{-1}{2} \sum \sum_s \check{\Delta}_{kl} \left(\check{y}_{k}-\check{y}_l\right)^2	
+	\end{align*}
+	\item Auch hier gilt, dass $E(\hat{V}(\hat{t}_\pi))=V(\hat{t}_\pi)$
+	\item Voraussetzung: $\pi_{kl}>0$ für alle $k \neq l \in U$
+	\item Dies ist die sogenannte Yates-Grundy(-Sen) Varianz, benannt nach Yates und Grundy (1953) und Sen (1953)
+	\item Gilt jedoch nicht für zufällige Stichprobengrößen!
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Stichprobengröße}
+\begin{itemize}
+	\item Auch die Stichprobengröße $n_S$ ist eine Statistik, die wir betrachten können:\small
+	\begin{gather*}
+	n_S = \sum_U I_k\\
+	E(n_S) = \sum_U \pi_k\\
+	V(n_S) = \sum_U \pi_k(1-\pi_k) + \underset{k\neq l}{\sum\sum_U} (\pi_{kl}-\pi_k \pi_l) 
+	= \sum_U\pi_k -\left(\sum_U \pi_k\right)^2 + \underset{k\neq l}{\sum\sum_U} \pi_{kl}
+	\end{gather*} \normalsize
+	\item Zufällige Stichprobengrößen treten z.B. bei Stichproben mit Zurücklegen, Bernoulli Sampling oder single-stage cluster sampling auf
+	\item Üblicherweise versucht man dies zu vermeiden und $p(s)$ derart zu gestalten, dass jede Stichprobe genau $n$ Elemente enthält. Dann gilt:
+	\begin{align*}
+	\sum_U \pi_k = n, \qquad \underset{k\neq l}{\sum\sum_U}\pi_{kl}=n(n-1), \qquad \sum_{\underset{l\neq k}{l \in U}} \pi_{kl} = (n-1)\pi_k
+	\end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Zusammenfassung Horvitz-Thompson-Schätzer}
+\begin{itemize}
+	\item $\hat{t}_\pi$ ist der $\pi$-Schätzer für die Merkmalssumme der Grundgesamtheit U
+	\begin{align*}
+	\hat{t}_\pi &= \sum_U I_k \frac{y_k}{\pi_k}=\sum_s \frac{y_k}{\pi_k} = \sum_s \check{y_k}\\
+	V(\hat{t}_\pi) &= \sum\sum_U \Delta_{kl}\check{y_k}\check{y_l}\\
+	\hat{V}(\hat{t}_\pi) &= \sum\sum_s \check{\Delta}_{kl}\check{y_k}\check{y_l}
+	\end{align*}
+	\item $\hat{\bar{y}}_\pi$ ist der $\pi$-Schätzer für den Mittelwert der Grundgesamtheit U
+	\begin{align*}
+	\hat{\bar{y}}_\pi &= \frac{1}{N}\sum_U I_k \frac{y_k}{\pi_k}=\frac{1}{N}\sum_s \frac{y_k}{\pi_k} = \frac{1}{N}\sum_s \check{y_k}\\
+	V(\hat{\bar{y}}_\pi) &= \frac{1}{N^2}\sum\sum_U \Delta_{kl}\check{y_k}\check{y_l}\\
+	\hat{V}(\hat{\bar{y}}_\pi) &= \frac{1}{N^2}\sum\sum_s \check{\Delta}_{kl}\check{y_k}\check{y_l}
+	\end{align*} 
+	\item Bemerkung: Alle Aussagen, die wir über die Merkmalssumme $t_U=\sum_U y_k$ treffen, lassen sich analog mit $1/N$ für den Mittelwert $\bar{y}_U$ treffen, wobei bei der Varianz mit $N^2$ geteilt wird.
+\end{itemize}
+\end{frame}
+
+
+\end{document}

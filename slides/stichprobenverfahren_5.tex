@@ -1,0 +1,168 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = de_DE
+
+\documentclass[9pt]{beamer}
+\usetheme{metropolis}
+\usepackage{iftex}
+
+\ifPDFTeX
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amsfonts,amssymb}
+\fi
+
+\ifXeTeX
+\fi
+
+\ifLuaTeX
+
+\fi
+
+\usepackage[ngerman]{babel}
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+%\setsansfont[BoldFont={Fira Sans SemiBold}]{Fira Sans Book}
+%\setsansfont{libertine}
+%\setmonofont{Helvetica Mono}
+
+\usepackage{appendixnumberbeamer}
+    % Backup slides
+    % call \appendix before your backup slides, metropolis will automatically turn off slide numbering and progress bars for slides in the appendix.
+
+\usepackage{booktabs}
+    % Better tables
+    % \toprule wird zu Beginn der Tabelle gesetzt
+    % \midrule werden innerhalb der Tabelle als horizontale Trennstriche verwendet
+    % \cmidrule{1-2} werden innerhalb der Tabelle als horizontale Trennstriche zwischen Spalten 1-2 verwendet
+    % \bottomrule setzt den Schlussstrich unter die Tabelle.
+    % F\"{u}r top- und bottomrule wird standardm\"{a}{\ss}ig eine dicke Linie verwendet, f\"{u}r midrule und cmidrule eine d\"{u}nne.
+    % Ein zus\"{a}tzlicher Abstand zwischen den Zeilen wird durch den Befehl \addlinespace erreicht.
+\usepackage{csquotes}
+
+%% Set title etc.
+\title{Stichprobenverfahren}
+\subtitle{Systematische Auswahl}
+\date[SS2017]{Sommersemester 2017}
+\author{Willi Mutschler (willi@mutschler.eu)}
+
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Motivation}
+\begin{block}{Beispiel für systematische Auswahl}
+Ein Dozent muss 600 Klausuren korrigieren und möchte eine grobe Idee über die Durchfallquote bekommen. Hierzu wirft er einen Würfel einmal und wirft z.B. eine \enquote{2}. Dann korrigiert er die 2te, 8te, 14te, ... , 596te Klausur.
+\end{block}
+\begin{itemize}
+	\item Systematische Auswahl wird in der Praxis sehr häufig verwendet, da sie kostengünstig und einfach durchzuführen ist 
+	\begin{itemize}
+		\item Vgl. obiges Beispiel mit Bernoulli Sampling, d.h. 600 Mal würfeln und nur bei einer 6 die Klausur korrigieren
+	\end{itemize}
+	\item Vorgehen: Das erste Element wird (mit gleicher Wahrscheinlichkeit für alle Elemente) zufällig gewählt, danach wird systematisch jedes $a$te Element in die Stichprobe aufgenommen
+	\item Die ganzzahlige Zahl $a$ wird Stichprobenintervall genannt
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Definition}
+\begin{itemize}
+	\item Sei $a$ das fixe Stichprobenintervall, $N$ die Größe der Grundgesamtheit und $n$ der ganzzahlige Teil von $N/a$, dann
+ist $N = na + c$, wobei $0\leq c < a$.
+	\item Algorithmus:
+	\begin{enumerate}
+		\item Wähle mit gleicher Wahrscheinlichkeit $1/a$ ein zufällige ganzzahlige Zahl $r$ mit $1\leq r \leq a$; $r$ bezeichnet man als zufälligen Start
+		\item Die Stichprobe besteht dann aus
+		\begin{align*}
+			s = \{k:k=r+(j-1)a\leq N;j=1,2,...,n_s\} = s_r
+		\end{align*}
+		wobei die Stichprobengröße $n_s$ entweder $n+1$ (bei $r\leq c$) oder $n$ (bei $c<r\leq a$) beträgt
+	\end{enumerate}
+	\item Im Beispiel: $r=2$, $a=6$, $c=0$ und $n_s=n=100$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Einschlusswahrscheinlichkeiten}
+\begin{itemize}
+	\item Die Menge $\mathcal{S}$ beinhaltet $a$ mögliche nicht überlappende Mengen und ist im Vergleich zur einfachen Zufallsstichprobe ohne Zurücklegen sehr klein: $M=|\mathcal{S}|=a$. 
+	\item Es gilt: $U = \bigcup_{r=1}^a s_r$
+	\item Sampling Design ist folglich:
+	\begin{align*}
+	p(s) = \begin{cases}
+	1/a & \text{falls } s\in \mathcal{S}\\
+	0 & \text{sonst}
+	\end{cases}
+	\end{align*}
+	\item Die Einschlusswahrscheinlichkeiten sind demnach
+	\begin{align*}
+	\pi_k &= 1/a\\
+	\pi_{kl} &= \begin{cases}
+	1/a & \text{falls $k$ und $l$ zur Stichprobe $s$ gehören} \\
+	0   & \text{sonst}
+	\end{cases}
+	\end{align*}
+	\item ACHTUNG: Die Voraussetzung $\pi_{kl} >0$ ist nicht erfüllt!
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Horvitz-Thompson Schätzer}
+\begin{itemize}
+	\item Der $\pi$-Schätzer für die Merkmalssumme $t_U = \sum_U y_k$ ist gegeben durch
+	\begin{align*}
+	\hat{t}_\pi = a t_s
+	\end{align*}
+	wobei $t_s = \sum_s y_k$ und $s$ ist eine mögliche Stichprobe unter systematischer Auswahl.
+	\item Die Varianz ist gegeben durch
+	\begin{align*}
+	V(\hat{t}_\pi) =  a (a-1) \underbrace{\frac{1}{a-1}\sum_{r=1}^a (t_{s_r}-\bar{t})^2}_{S_t^2} =  a \sum_{r=1}^a (t_{s_r}-\bar{t})^2
+	\end{align*}
+	mit $\bar{t}=\frac{1}{a}\sum_{r=1}^a t_{s_r}$ ist das Mittel der Stichprobensummen und $t_{s_r}=\sum_{s_r} y_k$
+	\item Da $\pi_{kl}>0$ nicht erfüllt ist, können wir die Formel für einen unverzerrten Varianzschätzer nicht verwenden
+	\item Es gibt hier sogar keinen unverzerrten Schätzer! Mögliche Vorgehen
+	\begin{itemize}
+		\item Verzerrten Schätzer verwenden, z.B. von einfacher Zufallsstichprobe
+		\item Modifizierung der systematischen Auswahl, z.B. mehrere zufällige Starts $m>1$ und Stichprobenintervall $ma$
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Effizienz}
+\begin{itemize}
+	\item $V(\hat{t}_\pi)$ ist klein, wenn die Stichprobensummen annähernd identisch sind
+	\item Folglich hängt die Effizienz der systematischen Auswahl von der Annordnung der $N$ Elemente der Grundgesamtheit ab
+	\item Betrachte $N=an$: 
+	\begin{align*}
+		\hat{t}_\pi = N\sum_{s_r}y_k/n = N \bar{y}_{s_r}\qquad \text{ und } \qquad 
+		V(\hat{t}_\pi) = N^2 \frac{1}{a} \sum_{r=1}^a(\bar{y}_{s_r}-\bar{y}_U)^2
+	\end{align*}
+	\item Es gilt, dass die Variation der Grundgesamtheit zerlegt werden kann:
+	\begin{align*}
+	\underbrace{\sum_U(y_k - \bar{y}_U)^2}_{SST} = \underbrace{\sum_{r=1}^a\sum_{s_r}(y_k - \bar{y}_{s_r})^2}_{SSW} + \underbrace{\sum_{r=1}^a n(\bar{y}_{s_r}-\bar{y}_U)^2}_{SSB}
+	\end{align*}
+	$SS$ Sum of Squares, $T$: total, $W$: within samples, $B$: between samples
+	\item $SST=(N-1)S_{yU}^2$ ist fix, d.h. $SSW \uparrow \rightarrow SSB \downarrow$
+	\item Für die Varianz folgt: $V(\hat{t_\pi}) = N \cdot SSB$
+	\item Je homogener (Tendenz gleicher $y$ Werte) die Elemente innerhalb der systematischen Stichproben sind, desto weniger effizient ist das systematische Auswahldesign
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Homogenitätsmaß}
+\begin{itemize}
+	\item Homogenität lässt sich messen mit z.B.
+	\begin{align*}
+	\delta = 1 - \frac{N-1}{N-a} \frac{SSW}{SST}
+	\end{align*}
+	mit intra-sample Varianz $SSW = (N-a)S_{yW}^2$ und Populationsvarianz $SST=(N-1)S_{yU}^2$ vereinfacht sich zu
+	\begin{align*}
+	\frac{S_{yW}^2}{S_{yU}^2} = (1-\delta)
+	\end{align*}
+	\item Die Extremwerte von $\delta$ sind
+	\begin{align*}
+	\delta_{min}=-\frac{a-1}{N-a} \qquad \text{und} \qquad \delta_{max} = 1
+	\end{align*}
+	\item Minimal falls $SSB=0$, d.h. alle $\bar{y}_s$ konstant
+	\item Maximal falls $SSW=0$, d.h. komplette Homogenität
+\end{itemize}
+\end{frame}
+\end{document}

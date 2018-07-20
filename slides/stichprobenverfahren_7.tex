@@ -1,0 +1,313 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = de_DE
+
+\documentclass[9pt]{beamer}
+\usetheme{metropolis}
+\usepackage{iftex}
+
+\ifPDFTeX
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amsfonts,amssymb}
+\fi
+
+\ifXeTeX
+\fi
+
+\ifLuaTeX
+
+\fi
+
+\usepackage[ngerman]{babel}
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+%\setsansfont[BoldFont={Fira Sans SemiBold}]{Fira Sans Book}
+%\setsansfont{libertine}
+%\setmonofont{Helvetica Mono}
+
+\usepackage{appendixnumberbeamer}
+    % Backup slides
+    % call \appendix before your backup slides, metropolis will automatically turn off slide numbering and progress bars for slides in the appendix.
+
+\usepackage{booktabs}
+    % Better tables
+    % \toprule wird zu Beginn der Tabelle gesetzt
+    % \midrule werden innerhalb der Tabelle als horizontale Trennstriche verwendet
+    % \cmidrule{1-2} werden innerhalb der Tabelle als horizontale Trennstriche zwischen Spalten 1-2 verwendet
+    % \bottomrule setzt den Schlussstrich unter die Tabelle.
+    % F\"{u}r top- und bottomrule wird standardm\"{a}{\ss}ig eine dicke Linie verwendet, f\"{u}r midrule und cmidrule eine d\"{u}nne.
+    % Ein zus\"{a}tzlicher Abstand zwischen den Zeilen wird durch den Befehl \addlinespace erreicht.
+\usepackage{csquotes}
+
+%% Set title etc.
+\title{Stichprobenverfahren}
+\subtitle{Geschichtete Zufallsstichproben}
+\date[SS2017]{Sommersemester 2017}
+\author{Willi Mutschler (willi@mutschler.eu)}
+
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Motivation}
+\begin{itemize}
+	\item Verwendung der einfachen Zufallsstichprobe suboptimal, da üblicherweise ex ante Informationen zur Verfügung stehen
+	\item Grundgesamtheit zerfällt auf natürliche Weise in Teilmengen: Staaten in Bundesländer, Städte in Stadtbezirke, Mitarbeiter eines Betriebes in verschiedene Abteilungen
+	\item Zerlegung der Population in Untergruppen wird als \textbf{Schichtung} oder \textbf{Stratifizierung} bezeichnet und die entsprechenden Gruppen als \textbf{Schichten} oder \textbf{Strata}
+	\item Beispiel: Stichprobe aus der Stadtbevölkerung. 
+	\begin{itemize}
+		\item Informationen über Stadtteile (reiche vs. arme), Gebiet der BRD hat um die 450 Kreise und kreisfreie Städte
+		\item Teile Grundgesamtheit in nichtüberlappende Gruppen, sogenannte Schichten (z.B. Stadtteile, Kreise) ein und ziehe aus den Schichten
+	\end{itemize}
+	\item Geschichtete Stichprobenverfahren sorgen dafür, dass
+	\begin{itemize}
+		\item wirklich aus allen Schichten gezogen wird
+		\item die Schätzung effizienter wird
+		\item mit Nonresponse oder Messfehlern besser umgegangen werden kann
+	\end{itemize}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Beispiel 1}
+\begin{block}{Durchschnittsmiete}
+	\begin{itemize}
+		\item Untersuche den durchschnittlichen Quadratmeterpreis von Mietwohnungen in einer Stadt
+		\item Einfache Zufallsstichprobe bietet sich nicht an, da Mietpreise stark von dem Stadtviertel abhängig sind
+		\item Besser: Ziehung auf der Ebene von Stadtvierteln bzw. Regionen, z.B.:
+		\begin{itemize}
+			\item Region 1: \enquote{reiche	Villengegend} 
+			\item Region 2: \enquote{mittlere Lage}
+			\item Region 3: \enquote{Plattenbausiedlung}			
+		\end{itemize}
+		\item Mit einzelnen Stichproben aus allen drei Regionen lassen sich dann Aussagen fällen über:
+		\begin{itemize}
+			\item Mietpreise in einzelnen Vierteln
+			\item Gesamtmittel des Quadratmeter-Mietpreises
+		\end{itemize}
+		\item Erheblicher Effizienzgewinn (unter bestimmten Bedingungen)
+	\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Beispiel 2}
+\begin{block}{Bibliotheksnutzung}
+	\begin{itemize}
+		\item Untersuche wie oft und in welchem	Umfang Studierende die Arbeitsräume der Bibliothek nutzen
+		\item Sekundärinformation: Studierende in niedrigeren Semestern weniger in Bibliothek (Unterschätzung der Nutzung) als solche kurz vorm Abschluss (Überschätzung der Nutzung)
+		\item Variabilität kann durch das Design der geschichteten Stichprobe verkleinert werden
+	\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Konstruktion einer Schicht}
+\begin{itemize}
+	\item Auswahl der Schichtvariable, an der wir die Grundgesamtheit nach Schichten unterteilen (Alter, Geschlecht, Berufsgruppen), bezeichnen wir mit $X$, sogennante Schichtungsmerkmal
+	\begin{itemize}
+		\item Im Mietpreisbeispiel: Stadtteile, Wohnungsgröße
+		\item Im Bibliotheksbeispiel: Semesterzahl
+	\end{itemize}
+	\item Wichtige Vorraussetzung: Kenntnis der relativen Schichtgrößen in der Grundgesamtheit, also Schichtzugehörigkeit und Schichtumfänge
+	\item Herausforderungen:
+	\begin{itemize}
+    \item Wie grenze ich das genau ab? Welche Intervalle, wie viele Schichten?
+    \item Unterschiedliche Stichprobenumfänge:
+    \begin{itemize}
+    	\item Stichprobenumfänge proportional zu Schichtgröße, also Ziehung entsprechend Anteilen an der Gesamtbevölkerung: Repräsentativität der Grundgesamtheit
+    	\item Wahlverhalten in alten Bundesländern relativ stabil (kleiner Stichprobenumfang nötig), in neuen Bundesländern weniger Wahlkontinuität (größerer Stichprobenumfang)
+    \end{itemize}
+   	\item Entscheidung für Stichprobenverfahren und Schätzmethodik innerhalb der Schichten (alle gleich oder unterschiedlich?)
+
+	\end{itemize}	
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Schichtungsprinzip}
+\begin{block}{Schichtungsprinzip}
+	Die Schichten sollen so gewählt werden, dass die Variablen (oder Merkmalsträger) innerhalb einer Schicht so ähnlich wie möglich sind. Die einzelnen Schichten sollten sich untereinander so weit wie möglich unterscheiden.
+\end{block}
+\end{frame}
+
+\begin{frame}{Notation}
+\begin{itemize}
+	\item Partitionierung der Grundgesamtheit $U$ in $H$ Untergruppen/Schichten: $$U_1,...,U_h,...,U_H \text{ mit } U_h = \{k: k \text{ gehört zur Schicht }h \}$$
+	\item Ziehe für $h=1,...,H$ unabhängig voneinander nicht-überlappende Stichproben $s_h$ aus $U_h$ mithilfe Stichprobendesign $p_h(\cdot)$:
+	$$s = s_1 \cup s_2 \cup ... \cup s_H$$
+	\item Aufgrund der Unabhängigkeit gilt $p(s)=p(s_1)p(s_2),\dots,p(s_H)$
+	\item Anzahl $N_h$ an Elementen in Schicht $h$ ist bekannt: $N = \sum_{h=1}^{H}N_h$
+	\item Stichprobenumfang in Schicht $h$ wird mit $n_h$ bezeichnet: $n = \sum_{h=1}^{H}n_h$
+	\item Die Merkmalssumme lässt sich zerlegen
+	$$t_U = \sum_U y_k = \sum_{h=1}^{H}t_{U_h} = \sum_{h=1}^H N_h \bar{y}_{U_h}$$ mit $t_{U_h}=\sum_{U_h} y_k$ und $\bar{y}_{U_h}$ das Schichtmittel.
+	\item Sei $W_h=N_h/N$ die (bekannte) relative Größe der Schicht $U_h$, dann
+	$$\bar{y}_{U}=\sum_{h=1}^H W_h \bar{y}_{U_h}$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Einschlusswahrscheinlichkeiten}
+\begin{itemize}
+ 	\item Erster Ordnung: $$\pi_k = Pr(k \in s) = Pr(k \in s_h)=\pi_{h,k}$$
+ 	\item Zweiter Ordnung ($k\neq l$ und $h\neq g$):
+	\begin{align*}
+	\pi_{kl} = Pr(k,l \in s) = 
+	\begin{cases}
+	Pr(k,l \in s_{h}) = \pi_{h,kl}\\
+	Pr(k \in s_{h}, l \in s_{g}) = \pi_{h,k} \pi_{g,l}
+	\end{cases}
+	\end{align*}
+	\item Für $k$ und $l$, die zu unterschiedlichen Schichten gehören, gilt also $\Delta_{kl}=0$
+ 	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Schätzung in Schichten (1)}
+\begin{itemize}
+	\item Der $\pi$-Schätzer für die Merkmalssumme der Grundgesamtheit ist
+	$$\hat{t}_\pi = \sum_{h=1}^H \hat{t}_{h\pi}$$
+	wobei $\hat{t}_{h\pi}$ der $\pi$-Schätzer von $t_{U_h}$ ist
+	\item Die Varianz ist
+	$$V(\hat{t}_\pi) = \sum_{h=1}^H V(\hat{t}_{h\pi})$$
+	wobei $V(\hat{t}_{h\pi})$ die Varianz von $\hat{t}_{h\pi}$ ist
+	\item Ein unverzerrter Schätzer für die Varianz ist
+	$$\hat{V}(\hat{t}_\pi) = \sum_{h=1}^H \hat{V}(\hat{t}_{h\pi})$$
+	wobei $\hat{V}(\hat{t}_{h\pi})$ ein unverzerrter Schätzer für $V(\hat{t}_{h\pi})$ ist
+	\item Für Herleitung: Die Zufallsvariablen $\hat{t}_{h\pi}$ sind unabhängig
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Schätzung in Schichten (2)}
+Falls in jeder Schicht eine einfache Zufallsstichprobe gezogen wird, gilt:
+\begin{align*}	
+\hat{t}_\pi &= \sum_{h=1}^H N_h \bar{y}_{s_h}\\
+V(\hat{t}_\pi) &= \sum_{h=1}^H N_h^2 \frac{1-f_h}{n_h}S_{yU_h}^2\\ 
+\hat{V}(\hat{t}_\pi) &= \sum_{h=1}^H N_h^2 \frac{1-f_h}{n_h} S_{y s_h}^2
+\end{align*}
+wobei $f_h=n_h/N_h$ der Auswahlsatz in Schicht $h$ und
+\begin{align*}
+S_{y U_h}^2 &= \frac{1}{N_h -1}\sum_{U_h}(y_k - \bar{y}_{U_h})^2\\
+S_{y s_h}^2 &= \frac{1}{n_h -1}\sum_{s_h}(y_k - \bar{y}_{s_h})^2
+\end{align*}
+\end{frame}
+
+\begin{frame}{Stichprobenumfang in den Schichten}
+\begin{itemize}
+	\item Proportionale Aufteilung
+	\begin{itemize}
+		\item wenn keine weiteren Informationen vorhanden
+	\end{itemize}
+	\item Optimale Aufteilung
+	\begin{itemize}
+		\item klein in Schichten mit geringer Streuung
+		\item groß in Schichten mit hoher Streuung
+	\end{itemize}
+	\item Kosten-optimale Streuung
+	\begin{itemize}
+		\item Minimierung der Erhebungskosten zur Informationsgewinnung
+	\end{itemize}
+	\item Abhängig von Rücklaufquoten
+	\begin{itemize}
+		\item Hoher Umfang in Schichten mit wenig Bereitschaft
+		\item Kleiner Umfang in Schichten mit viel Bereitschaft
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Stichprobenumfang in den Schichten: Proportionale Aufteilung}
+\begin{itemize}
+	\item Idee: größere Schichten erhalten einen größeren Anteil in der Stichprobe
+	\item Also: Wähle Stichprobenumfang in den einzelnen Schichten proportional zur Schichtgröße $N_h$ in der Population:
+	$$n_{h,prop}=\left[n\frac{N_h}{N}\right]$$
+	wobei die eckige Klammer nächst gelegene ganze Zahl liefert
+	\item Bezüglich Genauigkeit nicht notwendigerweise optimal
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Stichprobenumfang in den Schichten: Optimale Aufteilung}
+\begin{itemize}
+	\item Siehe Schichtungsprinzip!
+	\item Unter Vernachlässigung des Auswahlsatzes ist die Varianz bei dem einfachen Stichprobenverfahren innerhalb der Schichten bestimmt durch:
+	$$Var(\hat{t}_\pi) = \sum_{h=1}^H N_h^2 \frac{S_{yU_h}^2}{n_h}$$
+	je größer $N_h S_{yU_h}$ desto größer die Varianz
+	\item Idee: Wähle $n_h$ proportional zu $N_h S_{yU_h}$:
+	$$n_{h,opt}=\left[n \frac{N_h S_{yU_h}}{\sum_{i}^H N_i S_{yU_i}}\right]$$
+	\item Optimale Aufteilung setzt Kenntnis von $S_{yU_h}$ voraus (unrealistisch)
+	\item Auswege: 
+	\begin{itemize}
+		\item Pilotstichprobe von kleinerem Umfang
+		\item vorherige Studien
+		\item bei Plausibilität, dass Varianzen in den einzelnen Schichten sehr ähnlich bzw. gleich sind, entspricht die proportionale Aufteilung annähernd der optimalen Aufteilung.
+	\end{itemize}
+	\item Achtung: Optimalität bezieht sich lediglich auf ein Kriterium $y$, üblicherweise erheben wir sehr viele Kriterien
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Stichprobenumfang in den Schichten: Kosten-optimale Aufteilung}
+\begin{itemize}
+	\item Optimale Stichprobe erstrebenswert, aber häufig mit Kosten für z.B. Pilotstudien verbunden
+	\item Bezeichne $c_0$ die Fixkosten und $c_h$ die jeweiligen Kosten, um Informationen über ein Individuum aus der $h$ten Schicht zu erhalten
+	\item Gesamtkosten: $C = c_0 + \sum_{h=1}^{H}c_h n_h$
+	\item Kosten-optimale Aufteilung ist dann
+	\begin{align*}
+	n_{h,kostopt} = \left[n \frac{N_h S_{yU_h} /\sqrt{c_h}}{\sum_{i=1}^H N_i S_{yU_i}/\sqrt{c_i}}\right]
+	\end{align*}
+	\item Die optimale relative Stichprobengröße für Schicht $h$ ist größer, je (i) kleiner $c_h$ (ii) größer $N_h$ und (iii) größer $S_{yU_h}$
+	\item Für $c_h=c$ bekommen wir die sogennante \enquote{Neyman (1934) Allokation}	
+\end{itemize}
+\end{frame}
+
+\begin{frame}{A posteriori Schichtung (1)}
+\begin{itemize}
+	\item Generell bietet die geschichtete Stichprobe erhebliche Vorteile, wenn ein starker
+	Design-Effekt vorliegt, d.h. wenn die Streuung innerhalb der Schichten deutlich
+	geringer ist als die in der Grundgesamtheit
+	\item Manchmal ist geschichteten Stichprobe aber nicht möglich, da die Schichtzugehörigkeit in der
+	Grundgesamtheit nicht bekannt ist
+	\item Ebenso kann es vorkommen, dass die Stichprobe
+	bedingt durch unterschiedliche Rücklaufquoten bezüglich bekannter Sekundärmerkmale
+	verzerrt ist, z.B. erhöhter Männeranteil
+	\item Dies gilt es zu korrigieren im Rahmen einer \enquote{a
+	posteriori Schichtung}: Höhergewichtung der Individuen, die in der Stichprobe bezüglich der Schichtungsmerkmale unterrepräsentiert sind.
+		\item A posteriori Schichtung ist auch bekannt als Umgewichtung und ein häufig verwendetes
+	Mittel in Befragungen
+\end{itemize}
+\end{frame}
+
+\begin{frame}{A posteriori Schichtung (2)}
+	\begin{block}{Rechnernutzung von Studenten}
+		\begin{itemize}
+			\item Ziel einer Umfrage: wieviel Zeit pro
+			Woche verbringen Studenten im Rahmen ihres Studiums vor dem Rechner
+			\item Ziehung einer einfachen Zufallsstichprobe
+			\item Bei der Auswertung zeigt sich, dass ein deutlicher Geschlechtsunterschied besteht: männliche Studenten verbringen weitaus mehr Zeit vor dem Rechner
+			\item Nehmen wir an, dass der Anteil der
+			männlichen Studierenden bei 50\% liegt, in der Stichprobe hingegen befinden
+			sich (bedingt durch die zufällige Auswahl) 60\% Männer. 
+			\item Ignoriert man den geschlechtsspezifischen
+			Effekt, so überschätzt man möglicherweise die Rechnernutzungszeit
+			\item Schätzer kann jedoch unter Verwendung der Zusatzinformation zur Geschlechtsverteilung korrigiert
+			werden.
+		\end{itemize}
+
+\end{block}
+\end{frame}
+
+\begin{frame}{A posteriori Schichtung (3)}
+\begin{itemize}
+
+	\item Ein unverzerrter Schätzer für den Mittelwert $\bar{y}_{U}$ der Population ist:
+$$\hat{\bar{y}}_{U,post} = \sum_{h=1}^H \frac{N_h}{N}\bar{y}_{s_h}$$
+wobei $\bar{y}_{s_h}$ der Mittelwert in der h-ten Schicht ist
+\item Die Varianz lässt sich erwartungstreu schätzen durch
+$$\hat{V}(\hat{\bar{y}}_{U,post}) = \sum_{h=1}^H \left(\frac{N_h}{N}\right)^2 \frac{N_h - n_h}{N_h} \frac{s_h^2}{n_h}$$
+    \item Das Horvitz-Thompson-Theorem ist hier
+nicht anwenden, da die Gewichtung nicht durch die Auswahlwahrscheinlichkeiten,
+sondern durch die Schichtgrößen in Stichprobe und Grundgesamtheit erfolgt
+\end{itemize}
+\end{frame}
+
+
+
+\end{document}

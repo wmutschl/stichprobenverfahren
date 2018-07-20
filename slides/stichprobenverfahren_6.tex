@@ -1,0 +1,295 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = de_DE
+
+\documentclass[9pt]{beamer}
+\usetheme{metropolis}
+\usepackage{iftex}
+
+\ifPDFTeX
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amsfonts,amssymb}
+\fi
+
+\ifXeTeX
+\fi
+
+\ifLuaTeX
+
+\fi
+
+\usepackage[ngerman]{babel}
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+%\setsansfont[BoldFont={Fira Sans SemiBold}]{Fira Sans Book}
+%\setsansfont{libertine}
+%\setmonofont{Helvetica Mono}
+
+\usepackage{appendixnumberbeamer}
+    % Backup slides
+    % call \appendix before your backup slides, metropolis will automatically turn off slide numbering and progress bars for slides in the appendix.
+
+\usepackage{booktabs}
+    % Better tables
+    % \toprule wird zu Beginn der Tabelle gesetzt
+    % \midrule werden innerhalb der Tabelle als horizontale Trennstriche verwendet
+    % \cmidrule{1-2} werden innerhalb der Tabelle als horizontale Trennstriche zwischen Spalten 1-2 verwendet
+    % \bottomrule setzt den Schlussstrich unter die Tabelle.
+    % F\"{u}r top- und bottomrule wird standardm\"{a}{\ss}ig eine dicke Linie verwendet, f\"{u}r midrule und cmidrule eine d\"{u}nne.
+    % Ein zus\"{a}tzlicher Abstand zwischen den Zeilen wird durch den Befehl \addlinespace erreicht.
+\usepackage{csquotes}
+
+%% Set title etc.
+\title{Stichprobenverfahren}
+\subtitle{Proportionale Auswahlwahrscheinlichkeiten}
+\date[SS2017]{Sommersemester 2017}
+\author{Willi Mutschler (willi@mutschler.eu)}
+
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Motivation}\small
+\begin{block}{Beispiel}
+In einer Stichprobe sollen die Ausgaben für Marketing und Werbemaßnahmen von Kreisen und kreisfreien Städten eines Landes erhoben werden. Ziel ist es, den mittleren Marketing-Etat pro Kreis (bzw. Stadt) zu schätzen. Daraus lässt sich dann der Gesamt-Etat des Landes für Marketing hochrechnen. 
+\begin{itemize}
+	\item Ein mögliches Vorgehen wäre $n$ Kreise zufällig auszuwählen und nach ihrem Marketing-Etat zu befragen. Bei einer einfachen Zufallsstichprobe kann es dabei rein zufällig passieren, dass hauptsächlich kleine, bevölkerungsschwache Kreise gezogen werden, deren Etat generell kleiner ist als der von bevölkerungsreichen Städten.
+	\item Große Städte sind bezüglich des Marketing-Etats bedeutender, d.h. informativer als kleine Kreise. Daher scheint es sinnvoll, die größeren Städte mit größerer Wahrscheinlichkeit zu ziehen.
+	\item[$\hookrightarrow$] Einschlusswahrscheinlichkeiten sind proportional zu einer Hilfsvariablen
+\end{itemize}
+\end{block}
+Effekt: Proportionale Auswahlwahrscheinlichkeiten können die Varianz verringern.
+\end{frame}
+
+\begin{frame}{Proportionale Auswahlwahrscheinlichkeiten}
+Man unterscheidet
+\begin{itemize}
+	\item $\pi ps$ Sampling: 
+	\begin{itemize}
+		\item feste Stichprobengröße
+		\item ohne Zurücklegen
+		\item verbunden mit dem $\pi$ Schätzer 
+	\end{itemize}
+	\item $pps$ Sampling
+	\begin{itemize}
+		\item ggf. zufällige Stichprobengröße
+		\item mit Zurücklegen
+		\item verbunden mit dem $pwr$ Schätzer
+	\end{itemize}
+	\item Kombination aus $\pi ps$ und $pps$
+	\begin{itemize}
+		\item Horvitz-Thompson Schätzer
+		\item Hansen-Hurwitz Varianzschätzer
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{$\boldsymbol{\pi ps}$ Sampling (1)}
+\begin{itemize}
+	\item Der $\pi$ Schätzer für die Merkmalssumme ist gegeben durch $\hat{t}_\pi = \sum_s y_k/\pi_k$
+	\item Extremfall: ein Design bei dem $y_k/\pi_k=c$ mit $c$ konstant und $n$ fixe Stichprobengröße, dann gilt für eine beliebige Stichprobe: $\hat{t}_\pi=nc$
+	\item $\hat{t}_\pi$ hat keine Variation:
+	$$V(\hat{t}_\pi)=-\frac{1}{2}\sum\sum_U \Delta_{kl}\left(\frac{y_k}{\pi_k}-\frac{y_l}{\pi_l}\right)^2$$
+	\item Für so ein Design benötigen wir allerdings Informationen über alle $y_k$, die wir nicht haben
+	\item Deswegen suchen wir eine Variable $x$, von der wir annehmen können, dass sie approximativ proportional zu $y$ ist und bekommen so eine geringere Varianz des $\pi$ Schätzers
+	\item Im Beispiel haben pro-Kopf Ausgaben eine geringere Streuung als die absoluten Gesamtausgaben	
+\item Ziel: $\pi_k \propto x_k$
+	
+\end{itemize}
+\end{frame}
+
+\begin{frame}{$\boldsymbol{\pi ps}$ Sampling (2)}
+\begin{itemize}
+	\item  Einschlusswahrscheinlichkeiten: $\pi_k = n \frac{x_k}{\sum_{j=1}^N x_j}$ um Proportionalität und $\sum_U \pi_k =n$ zu gewährleisten; Annahme: $n x_k < \sum_{j=1}^N x_j$, damit $\pi_k \leq 1$
+	\item Anforderung an Design und Algorithmus:
+	\begin{enumerate}
+		\item Auswahlverfahren der Stichprobe ist relativ simpel
+		\item Die Einschlusswahrscheinlichkeiten erster Ordnung $\pi_k$ sind strikt proportional zu $x_k$
+		\item Die Einschlusswahrscheinlichkeiten zweiter Ordnung sind positiv $\pi_{kl} >0$ für alle $k\neq l$
+		\item Die Berechnung der $\pi_{kl}$ ist exakt und nicht allzu computerintensiv		
+		\item $\Delta_{kl} = \pi_{kl} - \pi_k \pi_l <0$ für alle $k\neq l$, so dass der Yates-Grundy-Sen Varianzschätzer stets nichtnegativ ist
+	\end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{$\boldsymbol{\pi ps}$ Sampling (3)}
+Design für $n=1$: Kumulative Totalmethode
+\begin{itemize}
+	\item Kumuliere $x_k$ wie folgt
+\begin{enumerate}
+	\item Setze $T_0 =0$, berechne $T_k = T_{k-1}+ x_k, k=1,...,N$
+	\item Ziehe aus der Gleichverteilung eine zufällige Zahl $\varepsilon$ zwischen 0 und 1. 
+	\item Falls $T_{k-1} < \varepsilon T_N \leq T_k$ wird das Element $k$ ausgewählt.
+\end{enumerate}
+\item Da $\pi_k = Pr(T_{k-1}<\varepsilon T_N \leq T_k) = \frac{T_k -T_{k-1}}{T_N} = \frac{x_k}{\sum_U x_k}$.
+\item Aber, da $n=1$, gilt $\pi_{kl}=0$ für alle $k\neq l$
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{$\boldsymbol{\pi ps}$ Sampling (4)}
+Design für $n=2$ nach Brewer (1963, 1975):
+\begin{itemize}
+	\item Sei $c_k = \frac{x_k(T_N-x_k)}{T_N(T_N-2x_k)}$ mit $T_N = \sum_U x_k$
+	\begin{enumerate}
+		\item Das erste Element $k$ wird mit Wahrscheinlichkeit $p_k =c_k/\sum_U c_k$ ohne Zurücklegen gezogen
+		\item Das zweite Element $l$ wird mit Wahrscheinlichkeit $p_{l|k} = x_l/(T_N-x_k)$ ohne Zurücklegen gezogen
+	\end{enumerate}
+	\item Es lässt sich zeigen, dass $\pi_k = 2x_k/T_N$ und 
+	\begin{align*}
+	\pi_{kl} = \frac{2x_k x_l}{T_N (\sum_U c_k)}\frac{T_N - x_k - x_l}{(T_N-2x_k)(T_N-2x_l)}
+	\end{align*}
+	und sogar $\Delta_{kl}<0$
+	\item Vereinfachende Annahme: $x_k < \sum_U x_k/2$, damit $\pi_k \leq 1$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{$\boldsymbol{\pi ps}$ Sampling (5)}
+Designs für $n>2$:
+\begin{itemize}
+	\item Algorithmisch schwierig genau nach $\pi_k$ auszuwählen
+	\item Einschlusswahrscheinlichkeiten zweiter Ordnung schwierig zu bekommen
+	\item $\Delta_{kl}<0$ schwierig zu gewährleisten
+	\item Überblick, siehe z.B. Brewer und Hanif (1983), Tillé (2006) oder Rosén (1997) 
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Exkurs: Systematisches $\boldsymbol{\pi ps}$ Sampling}
+\begin{itemize}
+	\item Sei $T_0 = 0$ und $T_k = T_{k-1}+x_k$, $a$ Stichprobenintervall, $n$ ganzahlige Teil von $T_N/a$, mit $T_N = \sum_U x_k=na+c$, $0 \leq c < a$
+	\begin{itemize}
+	\item Falls $c=0$ bekommen wir die Stichprobengröße $n$, falls $c>0$ bekommen wir die Stichprobengröße $n$ oder $n+1$
+	\end{itemize}
+	\item Annahme: $n x_k \leq \sum_U x_k$ und $x_k$ (gerundete) ganze Zahl
+	\item Systematisches $\pi ps$ Sampling:
+	\begin{enumerate}
+		\item Wähle mit gleicher Wahrscheinlichkeit, $1/a$, eine Zahl $r$ zwischen 1 und a (einschließlich).
+		\item Die Stichprobe besteht dann aus
+		\begin{align*}
+		s = \{k:k=T_{k-1} <r+(j-1)a\leq T_k \text{ für ein } j=1,2,...,n_s\} = s_r
+		\end{align*}
+		wobei $n_s = n$ für $r \leq c$ oder $n_s = n+1$ für $c < r \leq a$
+	\end{enumerate}
+	\item Intuition:
+	\begin{itemize}
+		\item Distanzen $x_k$ werden beginnend am Ursprung und Endend bei $T_N$ eine nach der anderen auf einer horizontalen Achse ausgelegt
+		\item $c=0$: totale Distanz $T_N$ wird in $n$ Intervalle mit gleicher Länge $a$ unterteilt 
+		\item Zufälliger Start für das erste Intervall, danach systematisch
+		\item im Prinzip fixe Stichprobengröße		
+	\end{itemize} 
+\item $\pi_k = \frac{n x_k}{T_N -c}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Monetary Unit Sampling}
+Relevant bei Wirtschaftsprüfern, um eine Stichprobe von Konten für eine Prüfung auszuwählen. $x_k$ ist z.B. die Größe des Kontos/Buchungen in Euro
+\begin{block}{Monetary Unit Sampling einfaches Beispiel}
+	\begin{itemize}
+		\item Prüffeld aus drei Rechnungen (5, 10 und 15 Euro)
+		\item Wahrscheinlichkeit bei einfacher Zufallsauswahl ist $1/3$, unabhängig vom Rechnungswert
+		\item Aber: in größeren Buchungen werden auch größere Fehler erwartet und in kleineren Buchungen die kleineren Fehler
+		\item $p(R1) = 5/30$, $p(R2) = 10/30$ und $p(R3)=15/30$
+		\item Somit kann ein Prüfer geforderte Risikominimierung erreichen
+	\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{pps Sampling (1)}
+Größenproportionale Designs mit Zurücklegen
+\begin{itemize}
+	\item Verwendung des $pwr$ Schätzers: $$\hat{t}_{pwr} =\frac{1}{m} \sum_{i=1}^m y_{k_i}/p_{k_i}$$ mit $m$ fixe Anzahl an Ziehungen mit Zurücklegen und $p_{k_i}$ die Wahrscheinlichkeit, das Element $k_i$ zu ziehen
+	\item Wenn wir ein Design haben, bei dem $y_k/p_k=c$ mit $c$ konstant, dann haben wir für jede geordnete Stichprobe, $os = \{k_1,...,k_m\}$: $\hat{t}_{pwr} = c$ 
+	\item $\hat{t}_{pwr}$ hat keine Variation:
+	$$V(\hat{t}_{pwr})=\frac{1}{m} \sum_U p_k \left(\frac{y_k}{p_k}-t_U\right)^2 = \frac{1}{2m}\sum\sum_U p_k p_l\left(\frac{y_k}{p_k}-\frac{y_l}{p_l}\right)^2$$
+	\item Für so ein Design benötigen wir Informationen über alle $y_k$
+	\item Deswegen suchen wir eine Variable $x$, von der wir annehmen können, dass sie approximativ proportional zu $y$ ist, und bekommen so eine geringere Varianz des $pwr$ Schätzers
+	\item Ziel: $p_k \propto x_k$	
+\end{itemize}
+\end{frame}
+
+\begin{frame}{pps Sampling (2)}
+Für die Ein-Zug-Auswahlwahrscheinlichkeit gilt $p_k \propto x_k$, also $$p_k = \pi_k/n =  \frac{x_k}{\sum_U x_k}$$
+\begin{itemize}
+	\item Für $n=1$ ist kumulative Totalmethode äquivalent zu $\pi ps$
+	\item $m$-maliges Wiederholen der kumulativen Totalmethode ergibt $pps$ geordnete Stichprobe $os =\{k_1,k_2,...,k_m\}$
+	\item pwr Schätzer: $$\hat{t}_{pwr} = \frac{1}{m}\sum_{i=1}^{m}\frac{y_{k_i}}{p_{k_i}}=(\sum_U x_k)\frac{1}{m} \sum_{i=1}^m \frac{y_{k_i}}{x_{k_i}}$$
+	\item Varianzschätzer lässt sich dann einfach berechnen gegeben obiges $p_k$:
+	$$ \hat{V}(\hat{t}_{pwr}) = (\sum_U x_k)^2 \frac{1}{m(m-1)}\left[\sum_{i=1}^{m}\left(\frac{y_{k_i}}{x_{k_i}}\right)^2-\frac{1}{m}\left(\sum_{i=1}^{m} \frac{y_{k_i}}{x_{k_i}}\right)^2\right]$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Kombination $\boldsymbol{\pi ps}$ und pps Sampling}
+\begin{itemize}
+	\item Varianzformel des $pwr$ Schätzers ist sehr simpel, Einschlusswahrscheinlichkeiten zweiter Ordnung werden nicht benötigt
+	\item $\pi$ Schätzer ist jedoch häufig effizienter als $pwr$
+	\item Manchmal verbindet man $\pi ps$ und $pps$:
+	\begin{enumerate}
+		\item Verwende $\pi ps$ Stichprobendesign mit fester Stichprobengröße $m$, so dass $$\pi_k = m p_k = m \frac{x_k}{\sum_U x_k}$$
+		\item Verwende $\pi$ Schätzer für Merkmalssumme $t_U$
+		\item Die Varianz wird dann geschätzt mit der $pps$ Formel:
+		$$v = \frac{1}{m(m-1)} \sum_s \left(\frac{y_k}{p_k}-\frac{1}{m}\sum_s \frac{y_k}{p_k}\right)^2$$
+		\item Wir haben hier jedoch eine Verzerrung:
+		$BIAS(v) = E(v)-V(\hat{t}_\pi)=\frac{m}{m-1}\left[V(\hat{t}_{pwr})-V(\hat{t}_\pi)\right]$
+		\item Falls $\pi$ Schätzer effizienter, dann überschätzen wir die Varianz mit $v$		
+	\end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Sampford Sampling (1)}
+\begin{itemize}
+	\item Idee der Verwerfungsstichprobe: 
+	\begin{itemize}
+		\item Ziehe eine Stichprobe vom Umfang $n$ mit Zurücklegen und den Ein-Zug-Auswahlwahrscheinlichkeiten $p_i$
+		\item Sind alle $n$ Elemente verschieden, so wird die Stichprobe akzeptiert, ansonsten verworfen und eine neue gezogen
+		\item Approximativ gilt dann $p_i \approx \pi_i/n$		
+	\end{itemize}
+\item Sampford (1967) Algorithmus sorgt für exakt $p_i = \pi_i/n$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Sampford Sampling (2)}\small
+\begin{block}{Sampford Algorithmus}
+	\begin{itemize}
+		\item Gegeben seien Auswahlwahrscheinlichkeiten $\pi_k$ mit $\sum_U \pi_k = n$, eine Stichprobe der Größe $n$ kann dann wir folgt gezogen werden:
+		\begin{enumerate}
+			\item Ziehe das erste Element mit $p_k = \pi_k/n$
+			\item In den weiteren $(n-1)$ Schritten werden aus allen Elementen mit Zurücklegen $(n-1)$ Elemente gezogen mit $\tilde{p}_k = \frac{\frac{\pi_k}{1-\pi_k}}{\sum_{j=1}^N \frac{\pi_j}{1-\pi_j}}$
+			\item Falls die $n$ gezogenen Elemente nicht paarweise verschieden, verwerfe die Stichprobe und beginne bei Schritt 1 
+		\end{enumerate}
+		\item Auswahlwahrscheinlichkeiten zweiter Ordnung:
+		$$ \pi_{kl} = K \frac{p_k}{1-\pi_k} \frac{p_l}{1-\pi_l}\sum_{t=2}^n (t-\pi_k - \pi_l) L_{n-t}(kl) \frac{1}{n^{t-2}}$$
+		mit $K:=\left(\sum_{t=1}^{n}t L_{n-t}/n^t\right)^{-1}$,  $L_m := \underset{\text{s|s hat die Länge m}}{\sum} \prod_{l \in s} \frac{\pi_l/n}{1-\pi_l}$, $L_m(ij):=\underset{\text{s|s hat die Länge m und enthält nicht i,j}}{\sum} \prod_{l \in s} \frac{\pi_l/n}{1-\pi_l}$
+		\item Es gilt: $\pi_{kl} < \pi_k \pi_l$, also Existenz positiver Varianzschätzung 
+		\item Bei großen Auswahlsätzen führt Sampford Sampling zu langen Rechenzeiten
+	\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Abschlussbeispiel}\footnotesize
+\begin{itemize}
+	\item Fischereistudie in England, siehe Cotter, Course, Buckland, und Garrod (2002)
+	\item Ziel: Anzahl gefangener Fische schätzen
+	\item Dabei wurden Kabeljau, Schellfisch und Weißfisch in der Nordsee in den Jahren von 1997 bis 1998	betrachtet. 
+	\item Gesamtzahlen nur sehr schwer zu erheben, daher Erhebung auf verschiedenen Fischerbooten
+	\item $y_k$ sind die in einem bestimmten Zeitraum auf dem Boot $k$ gefangenen Fische	
+	\item Boote unterscheiden sich stark in Kapazität und Fangstrategie, hohe Streuung der $y_k$ und damit wäre eine Schätzung basierend auf einer einfachen Zufallsstichprobe der Boote nur sehr ungenau. 
+	\item Verbesserung der Genauigkeit durch Hilfsmerkmal, das möglichst proportional zu den gefangenen Fischen $y_k$ ist und vor der Stichprobenziehung bekannt ist:
+	$$X = \frac{VCU \cdot \text{Aufwand}}{\text{durchschnittliche Dauer der Ausfahrten in Tagen}}$$
+   \item VCU: Kapazität der Schiffe (\enquote{vessel capacity unit})
+	\item Aufwand: Stunden, die das Boot in den früheren Jahren unterwegs war
+	\item Dauer der Ausfahrten ist indirekt proportional: kürzere Zeitspanne erlaubt mehr Ausfahrten
+	\item Methodik: Ziehen der Boote mit Zurücklegen und Hansen-Hurwitz-Schätzer
+	\item Da sich die Boote erheblich in ihren Fängen unterschieden, führte die PPS-Strategie hier zu einem erheblichen Effizienzgewinn
+\end{itemize}
+
+\end{frame}
+\end{document}

@@ -1,0 +1,120 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = de_DE
+\documentclass[9pt]{beamer}
+\usetheme{metropolis}
+\usepackage{iftex}
+
+\ifPDFTeX
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amsfonts,amssymb}
+\fi
+
+\ifXeTeX
+\fi
+
+\ifLuaTeX
+
+\fi
+
+\usepackage[ngerman]{babel}
+\usepackage{csquotes}
+%\beamerdefaultoverlayspecification{<+->}
+
+
+%\setsansfont[BoldFont={Fira Sans SemiBold}]{Fira Sans Book}
+%\setsansfont{libertine}
+%\setmonofont{Helvetica Mono}
+
+\usepackage{appendixnumberbeamer}
+    % Backup slides
+    % call \appendix before your backup slides, metropolis will automatically turn off slide numbering and progress bars for slides in the appendix.
+
+\usepackage{booktabs}
+    % Better tables
+    % \toprule wird zu Beginn der Tabelle gesetzt
+    % \midrule werden innerhalb der Tabelle als horizontale Trennstriche verwendet
+    % \cmidrule{1-2} werden innerhalb der Tabelle als horizontale Trennstriche zwischen Spalten 1-2 verwendet
+    % \bottomrule setzt den Schlussstrich unter die Tabelle.
+    % F\"{u}r top- und bottomrule wird standardm\"{a}{\ss}ig eine dicke Linie verwendet, f\"{u}r midrule und cmidrule eine d\"{u}nne.
+    % Ein zus\"{a}tzlicher Abstand zwischen den Zeilen wird durch den Befehl \addlinespace erreicht.
+
+
+%% Set title etc.
+\title{Stichprobenverfahren}
+\subtitle{Einschlusswahrscheinlichkeiten}
+\date[SS2017]{Sommersemester 2017}
+\author{Willi Mutschler\\willi@mutschler.eu}
+
+
+\begin{document}
+\maketitle
+
+
+\begin{frame}{Notation (1)}
+\begin{itemize}
+	\item $U=\{u_1,\dots,u_k,\dots,u_N\}$ bezeichne die Grundgesamtheit mit individuellen Einheiten $u_k$, $k=1,\dots,N$, $N$ ist üblicherweise bekannt
+	\item Vereinfachend wird das $k$te Element über sein Label $k$ repräsentiert, also $U=\{1,\dots,k,\dots,N\}$
+	\item $s\subset U$ bezeichne die realisierte Stichprobe mit $n$ Elementen aus $U$
+	\item $\mathcal{S}=\{s_1,s_2,\dots,s_M\}$ bezeichne die Menge aller möglichen Stichproben
+	\item Wir interessieren uns für das Merkmal $Y$: die spezifische Ausprägung $y_k$ für Element $u_k$ ist unbekannt
+	\item Die Verteilung von $Y$ in $U$ kann mithilfe von Parametern beschrieben werden, z.B.
+	\begin{align*}
+	t_U &= \sum_U y_k = \sum_{k=1}^{N} y_k\\
+	\bar{y}_U &= \frac{1}{N}\sum_U y_k = \frac{1}{N}\sum_{k=1}^N y_k\\
+	s^2_{y,U} &= \frac{1}{N-1}\sum_U(y_k-\bar{y}_U)^2
+	\end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Notation (2)}
+\begin{itemize}
+	\item Das Stichprobendesign definiert die Wahrscheinlichkeitsverteilung $p(\cdot)$ 	für die zu ziehende Stichprobe S: $P(S=s)=p(s)$ für alle $s\in \mathcal{S}$
+	\item Es gilt: $p(s)\geq0$ und $\sum_{s\in \mathcal{S}}p(s)=1$
+	\item $p(s)$ wird auch \enquote{sampling design} genannt
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Einschlussindikator}
+\begin{itemize}
+	\item Die Indikatorvariable $I$ is eine dichotome Zufallsvariable
+	\begin{align*}
+	I_k = \begin{cases}
+	1, & k\in \mathcal{S}\\
+	0, & k \notin \mathcal{S}
+	\end{cases}
+	\end{align*}
+	\item $I_k$ ist folglich eine Funktion von $S$: $I_k=I_k(S)$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Einschlusswahrscheinlichkeit}
+\begin{itemize}
+	\item Die Einschlusswahrscheinlichkeit $\pi_k$ ist die Wahrscheinlichkeit, dass eine zufällige Stichprobe $S$ gezogen wird, die Element $k$ enthält:
+	\begin{align*}
+	\pi_k = P(k\in S)= P(I_k = 1) = \sum_{s\ni k}p(s)
+	\end{align*}
+	$s\ni k$ bezieht sich auf alle Stichproben $s$, die $k$ enthalten
+	\item Summe über alle k:
+	\begin{align*}
+	\sum_{k \in U}\pi_k = \sum_{k \in U}\sum_{s\ni k} p(s) = n \sum_{s\in \mathcal{S}}p(s) = n\cdot 1 = n
+	\end{align*}
+	\item Einschlusswahrscheinlichkeit $\pi_{kl}$ ist die Wahrscheinlichkeit, dass eine zufällige Stichprobe $S$ gezogen wird, die Element $k$ und $l$ enthält:
+	\begin{align*}
+	\pi_{kl} = P(k\&l \in S)= P(I_k I_l= 1) = \sum_{s\ni k\&l}p(s)
+	\end{align*}
+	\item Es gilt: $\pi_{kl}=\pi_{lk}$ für alle $k,l$. Was ist mit $k=l$?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Eigenschaften des Einschlussindikators}
+\begin{itemize}
+	\item $I_k$ ist Bernoulli verteilt
+	\item Erwartungswert: $E(I_k)=0\cdot(1-\pi_k)+1\cdot\pi_k = \pi_k = P(I_k=1)$
+	\item Varianz: $V(I_k) = E(I_k^2)-E(I_k)^2=\pi_k(1-\pi_k)$
+	\item Kovarianz: $Cov(I_k,I_l) = E(I_k I_l) - E(I_k)E(I_l)=\pi_{kl}-\pi_k \pi_l$
+	\item Bemerkung: Ein \enquote{sampling design} wird \enquote{measurable} genannt, wenn $\pi_k >0$ und $\pi_{kl}>0$ für alle $k\neq l \in U$
+\end{itemize}
+\end{frame}
+\end{document}

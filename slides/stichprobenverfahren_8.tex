@@ -1,0 +1,244 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = de_DE
+
+\documentclass[9pt]{beamer}
+\usetheme{metropolis}
+\usepackage{iftex}
+
+\ifPDFTeX
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amsfonts,amssymb}
+\fi
+
+\ifXeTeX
+\fi
+
+\ifLuaTeX
+
+\fi
+
+\usepackage[ngerman]{babel}
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+%\setsansfont[BoldFont={Fira Sans SemiBold}]{Fira Sans Book}
+%\setsansfont{libertine}
+%\setmonofont{Helvetica Mono}
+
+\usepackage{appendixnumberbeamer}
+    % Backup slides
+    % call \appendix before your backup slides, metropolis will automatically turn off slide numbering and progress bars for slides in the appendix.
+
+\usepackage{booktabs}
+    % Better tables
+    % \toprule wird zu Beginn der Tabelle gesetzt
+    % \midrule werden innerhalb der Tabelle als horizontale Trennstriche verwendet
+    % \cmidrule{1-2} werden innerhalb der Tabelle als horizontale Trennstriche zwischen Spalten 1-2 verwendet
+    % \bottomrule setzt den Schlussstrich unter die Tabelle.
+    % F\"{u}r top- und bottomrule wird standardm\"{a}{\ss}ig eine dicke Linie verwendet, f\"{u}r midrule und cmidrule eine d\"{u}nne.
+    % Ein zus\"{a}tzlicher Abstand zwischen den Zeilen wird durch den Befehl \addlinespace erreicht.
+\usepackage{csquotes}
+
+%% Set title etc.
+\title{Stichprobenverfahren}
+\subtitle{Cluster-Stichproben}
+\date[SS2017]{Sommersemester 2017}
+\author{Willi Mutschler (willi@mutschler.eu)}
+
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Motivation}
+Bisher: Zugriff auf einzelne Untersuchungseinheiten ohne Probleme möglich und
+gleichzeitig kosteneffizient; in der Praxis häufig jedoch nicht möglich!
+\begin{block}{Zigarettenkonsum}
+	\begin{itemize}
+	\item Zur Bestimmung des Zigarettenkonsums von Hauptschülern in
+	der 8. Klasse soll eine Erhebung mit Hilfe von Fragebögen durchgeführt werden
+	\item Ziehung von einzelnen Schülern ist sehr aufwendig, da eine Liste aller Schüler der 8.
+	Klasse vorliegen müsste
+	\item Eine derartige Liste ist jedoch selten vorhanden oder	wird aus Datenschutzgründen nicht zur Verfügung gestellt
+	\item Mögliches Vorgehen: Zufallsauswahl von Schulklassen und nicht von Schülern, da eine Liste der Schulklassen
+	oder auch Schulen viel einfacher zu erhalten ist
+	\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Idee}
+Wir sprechen von einer sogenannten \textit{Cluster-Ziehung} bzw. \textit{Klumpen-Ziehung}, wenn
+\begin{itemize}
+	\item Elemente der Grundgesamtheit (die Schüler) in natürlicher Weise sich in nicht überlappende Gruppen (die
+	Klassen) zusammenfassen lassen, die wir als Cluster oder Klumpen bezeichnen
+	\item Die Idee der Clusterstichprobe besteht nun darin, eine Zufallsstichprobe aus den Clustern zu ziehen und innerhalb der gezogenen Cluster
+	eine Vollerhebung durchzuführen
+	\item Ziehung somit nicht auf den Elementen der Population, sondern auf den Clustern
+	\item Wichtigstes Argument für Cluster-Stichprobe: Kosteneffizienz!
+	\item Wichtigstes Argument gegen Cluster-Stichprobe: Clusterbildung führt nicht notwendigerweise zu einer genaueren Stichprobe im Sinne einer reduzierten Varianz
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Clusterbildung (I)}
+\begin{block}{Clusterprinzip}
+Cluster sollten so gewählt werden, dass Beobachtungen innerhalb eines
+Clusters so heterogen wie möglich sind, sich einzelne Cluster aber
+so wenig wie möglich voneinander unterscheiden.
+\end{block}
+\end{frame}
+
+\begin{frame}{Clusterbildung (II)}
+Bemerkungen:
+\begin{itemize}
+	\item Clusterprinzip bildet das Gegenteil zum Schichtungsprinzip
+	\item Cluster werden häufig als lokale Gruppen gewählt: Straßenzüge, Gemeinden oder Schulen 
+	\item Aber Bewohner einer Straße sind homogen, wohingegen die Straßen einer Stadt von Seiten der Bevölkerungsstruktur her heterogen sind
+	\item Ebenso sind Gemeinden (oder Schulen) in sich homogen und unterscheiden sich von anderen Gemeinden (oder Schulen)
+	\item Die praktischen Vorteile einer Cluster-Stichprobe	können im Widerspruch zum Clusterprinzip stehen $\Rightarrow$ Effizienzverlust
+	\item Design der Cluster-Stichprobe wird folglich vor allem aufgrund der einfachen Umsetzbarkeit in der Praxis gewählt
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Mehrere Stufen}
+\begin{itemize}
+\item Einfache Cluster-Ziehung wird auch \textit{single-stage cluster sampling} genannt
+\item \textit{Two-stage cluster sampling}
+\begin{itemize}
+	\item Population wird gruppiert in nicht-überlappende Untergruppen, diese werden primary samling units (PSUs) genannt. Wir ziehen zufällig PSUs (first-stage sampling)	
+	\item Für jedes PSU des first-stage samples werden nun wiederrum Elemente oder Cluster gezogen, man bekommt so die sogenannten \textit{second-stage sampling units (SSUs)} 
+	\item Falls jedes SSU ein Element ist, nennen wir dies \textit{two-stage element sampling}, falls jedes SSU ein Cluster von Elementen ist, nennen wir es \textit{two-stage cluster sampling}
+\end{itemize}
+\item Erweiterung um \textit{multi-stage sampling} möglich, z.B. bei drei Stufen sprechen wir dann von \textit{third-stage sampling units} (TSU)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Notation}
+\begin{itemize}
+	\item Die Grundgesamtheit $U=\{1,...,k,...,N\}$ wird in $N_I$ Cluster eingeteilt, diese werden mit $U_1,...,U_i,... U_{N_I}$ bezeichnet
+	\item Die Menge der Cluster ist somit: $U_I = \{1,...,i,... N_I\}$
+	\item $N_i$ bezeichnet die Anzahl an Elementen im $i$ten Cluster $U_i$
+	\item Es gilt: $U = \bigcup_{i \in U_{I}} U_i$ und $N = \sum_{i \in U_{i}} N_i$
+\end{itemize}
+Der Index $I$ wird hier verwendet für die first-stage cluster sampling (II für second-stage usw.)
+\end{frame}
+
+\begin{frame}{Single-stage Cluster}
+Eine single-stage Cluster-Stichprobe ist nun definiert durch:
+\begin{enumerate}
+	\item Eine Stichprobe $s_I$ an Clustern wird zufällig mit Design $p_I(\cdot)$ aus $U_I$ gezogen. Die Größe von $s_I$ bezeichnen wir mit $n_I$ (bei fixierter Stichprobengröße) bzw. $n_{s_I}$ (bei variabler Stichprobengröße).
+	\item Jedes Element in den ausgewählten Clustern wird beobachtet und voll erhoben.
+\end{enumerate}
+Bemerkungen:
+\begin{itemize}
+\item $p_I$ kann ein beliebiges Design sein: einfache Zufallsstichprobe ohne Zurücklegen, systematische Ziehung, Schichten,...
+\item Die Stichprobe ist $s=\bigcup_{i \in s_{I}} U_i$ mit $n_s = \sum_{s_I} N_i$
+\item Die Anzahl an beobachteten Elementen $n_s$ ist im Allgemeinen nicht bekannt, da die Clustergrößen $N_i$ unterschiedlich sein können
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Einschlusswahrscheinlichkeiten}
+\begin{itemize}
+\item Einschlusswahrscheinlichkeiten für Cluster:
+\begin{align*}
+\pi_{Ii} = \sum_{s_I \ni i} p_I(s_I)\\
+\pi_{Iij} = \sum_{s_I \ni i \& j} p_I(s_I)
+\end{align*}
+\item Einschlusswahrscheinlichkeiten für Elemente:
+\begin{itemize} 
+	\item $\pi_k = Pr(k \in s)= Pr(i\in s_I) = \pi_{Ii}$
+	\item Falls $k$ und $l$ im selben Cluster: $\pi_{kl} = Pr(k \&l \in s) = Pr(i \in s_I) = \pi_{Ii}$
+	\item Falls $k$ und $l$ in unterschiedlichen Clustern: $\pi_{kl} = Pr(k \&l \in s) = Pr(i \& j \in s_I) = \pi_{Iij}$
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{$\boldsymbol{\pi}$-Schätzung}
+
+\begin{itemize}
+	\item $t_i = \sum_{U_i} y_k$ bezeichne die Merkmalssumme in Cluster $i$, dann ist die Populationssumme $t_U = \sum_U y_k = \sum_{U_I} t_i$	
+	\item Der $\pi$ Schätzer für die Merkmalssumme $t_U$ ist $$\hat{t}_\pi = \sum_{s_I} \check{t}_i = \sum_{s_I} t_i/\pi_{Ii}$$
+	\item Die Varianz ist gegeben durch $$V(\hat{t}_\pi) = \sum\sum_{U_I} \Delta_{Iij}\check{t}_i \check{t}_j$$
+	\item Die Varianz kann erwartungstreu geschätzt werden mit $$\hat{V}(\hat{t}_\pi) \sum\sum_{s_I} \check{\Delta}_{Iij}\check{t}_i \check{t}_j$$
+	\item Falls $p_I$ ein Design mit fixierter Stichprobengröße ist, dann
+	\begin{align*}
+	V(\hat{t}_\pi) = -\frac{1}{2}\sum\sum_{U_I} \Delta_{Iij}(\check{t}_i - \check{t}_j)^2 \text{ und }
+	\hat{V}(\hat{t}_\pi) = -\frac{1}{2}\sum\sum_{s_I} \check{\Delta}_{Iij}(\check{t}_i - \check{t}_j)^2
+	\end{align*}
+\end{itemize}
+Achtung: Schätzung des Mittelwertes erfolgt hier nicht einfach durch Division mit $N$, da $N$ üblicherweise unbekannt ist, somit ist $t_U/N$ ein Quotient von zwei Zufallsvariablen.
+\end{frame}
+
+
+\begin{frame}{Einfacher Cluster-Schätzer}
+\begin{itemize}
+	\item Betrachte einfache Zufallsstichprobe ohne Zurücklegen bei der Clusterauswahl
+	\item Wir kriegen also eine Stichprobe $s_I$ mit fixer Größe $n_I$, die aus den $N_I$ Clustern $U_I$ gezogen wird, wobei alle Elemente innerhalb der Cluster beobachtet werden
+	\item Der $\pi$ Schätzer für die Merkmalssumme $t_U$ ist $\hat{t}_\pi = N_I \bar{t_{s_{I}}}$ mit $\bar{t_{s_{I}}} = \sum_{s_I} t_i/n_I$ ist die durchschnittliche Clustersumme in $s_I$
+	\item Die Varianz ist gegeben durch $$V(\hat{t}_\pi) = N_I^2\frac{1-f_I}{n_I}S_{tU_I}^2$$ mit $f_I = n_I/N_I$,  $S_{tU_I}^2 = \frac{1}{N_I - 1}\sum_{U_I} (t_i - \bar{t_{U_{I}}})^2 $, wobei $\bar{t_{U_{I}}} = \sum_{U_I} t_i/N_I$
+	\item Die Varianz kann erwartungstreu geschätzt werden mit $$\hat{V}(\hat{t}_\pi) = N_I^2 \frac{1-f_I}{n_I} S_{ts_I}^2$$ mit $S_{ts_I}^2 = \frac{1}{n_I - 1}\sum_{s_I} (t_i - \bar{t_{s_{I}}})^2 $
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Design Effekt (I)}
+\begin{itemize}
+	\item Homogenitätskoeffizient: $\delta = 1-\frac{S_{yW}^2}{S_{yU}^2}$ mit $$S_{yW}^2 = \frac{1}{N- N_I}\sum_{U_I}\sum_{U_i} (y_k - \bar{y}_{U_i})^2 = \frac{\sum_{U_I}(N_I-1)S_{yU_i}^2}{\sum_{U_I}(N_i-1)}$$ ist die \textit{pooled within-cluster-variance} und $\bar{y}_{U_i}= \sum_{U_i}y_k/N_i$ ist der Mittelwert im Cluster $i$
+	\item $S_{yW}^2$ ist das gewichtete Mittel der $N_I$ Cluster mit jeweiliger Varianz $S_{y U_i}^2 = \frac{1}{N_i-1}\sum_{U_i}(y_k - \bar{y}_{U_i})^2$
+	\item Bemerkung: $\delta$ ist adjustiertes Bestimmtheitsmaß in der Regression von $y$ auf $N_I$ Dummy Variablen (Clusterzugehörigkeit)
+	\item Für den Homogenitätsgrad $\delta$ gilt $-\frac{N_I -1}{N-N_I} \leq \delta \leq 1$
+	\item Ein hoher Wert für $\delta$ bedeutet, dass Elemente innerhalb eines Clusters sehr ähnlich sind, also eine hohe Homogenität aufweisen
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Design Effekt (II)}
+\begin{itemize}
+	\item Sei $\bar{N} = N/N_I$ und $K_I = N_I^2(1-f_I)/n_I$ und $Cov = \frac{1}{N_I-1} \sum_{U_I} (N_i - \bar{N})N_i \bar{y}^2_{U_i}$ die Kovarianz zwischen $N_i$ und $N_i \bar{y}^2_{U_i}$, dann
+	$$ S_{tU_I}^2 = \bar{N}S_{yU}^2\left(1+\frac{N-N_I}{N_I-1}\delta\right)+ Cov$$
+	\item Die Varianz des einfachen Cluster-Schätzer, bezeichnen wir mit $V_{SIC}$, ist dann
+	$$V_{SIC} = \left(1+\frac{N-N_I}{N_I-1}\delta\right) \bar{N}K_I S_{yU}^2 + K_i Cov$$
+	\item Die erwartete Anzahl an beobachtbaren Elementen mit $n_I$ Clustern ist $E(n_s)=n_I \bar{N} = n$
+	\item Betrachte nun einfache Zufallsstichprobe (SI) mit Stichprobengröße $n=n_I \bar{N}$, der $\pi$ Schätzer ist ist dann $N\bar{y}_s$ und die Varianz $$V_{SI}=\bar{N}K_I S_{yU}^2$$
+	\item Der Design-Effekt ist dann also
+	$$ deff(SIC,SI) = \frac{V_{SIC}}{V_{SI}} = 1 + \frac{N-N_I}{N_I-1}\delta + \frac{Cov}{\bar{N}S_{yU}^2}$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Design Effekt (III)}
+
+\begin{enumerate}
+	\item Annahme: Alle Clustergrößen identisch, $N_i = \bar{N}$, dann 
+	\begin{itemize}
+		\item $Cov = 0$ und $$deff=1+\frac{N-N_I}{N_I-1}\delta$$
+		\item $V_{SIC}< V_{SI}$ nur wenn $\delta < 0$, also wenn es hinreichend große within-cluster Variation gibt
+		\item In Praxis $\delta >0$ üblich, da Elemente innerhalb eines Clusters ähnliche Eigenschaften aufweisen
+		\item Effizienzverlust, insbesondere bei hohen Clustergrößen
+	\end{itemize}
+	\item Annahme: Unterschiedliche Clustergrößen und Korrelatoin zwischen $N_i$ und $N_i \bar{y}_{U_i}^2$ ist positiv, dann
+	\begin{itemize}
+		\item zweiter Term wird groß, Effizienzverlust groß
+		\item Extremfall: $\delta = \delta_{min}$, also alle $\bar{y}_{U_i}$ sind gleich $\bar{y}_U$ und $V_{SIC}$ wird groß, wenn die Clustergrößenvarianz auch groß ist. Designeffekt ist hier:
+		$$deff = \bar{N}\left(\frac{CV_N}{CV_y}\right)^2$$ mit $CV_N = S_{NU_I}/\bar{N}$ und $CV_y = S_{yU}/\bar{y}_U$
+	\end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Design Effekt (IV)}
+\begin{itemize}
+\item Es zeigt sich, dass je kleiner die Varianz zwischen den Clustern
+ist, desto effizienter ist die Anwendung des Cluster-Schätzers
+\item Effizienz nimmt bei steigender Clustergröße ab 
+\item Kosten für eine einfache Zufallsstichprobe in der Regel sehr viel höher als die einer Cluster-Stichprobe vom gleichen Umfang
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Berücksichtigung der Clustergröße}
+\begin{itemize}
+\item Clustergröße ist als Hilfsmerkmal geeignet
+\item Wähle also ein Design, bei dem die Auswahlwahrscheinlichkeiten proportional zur Clustergröße sind
+\item das Design ist in diesem Fall eine größenproportionale Ziehung
+\end{itemize}
+\end{frame}
+
+\end{document}
